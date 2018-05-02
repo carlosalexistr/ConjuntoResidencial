@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DELL
  */
-@WebServlet(name = "ParentescoController", urlPatterns = {"/ParentescoController"})
+@WebServlet(name = "ParentescoController", urlPatterns = {"/Parentesco"})
 public class ParentescoController extends HttpServlet {
 
     ParentescoDAOImp p = new ParentescoDAOImp();
@@ -69,9 +69,8 @@ public class ParentescoController extends HttpServlet {
         p.save(pa);
     }
     
-    public void eliminarParentesco(HttpServletRequest request, HttpServletResponse response)
+    public void eliminarParentesco(int id)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
         p.deleteById(id);
     }
 
@@ -87,6 +86,10 @@ public class ParentescoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String param = request.getParameter("action");
+        if(param.equals("delete")) {
+            eliminarParentesco(Integer.parseInt(request.getParameter("id")));
+        }
         mostrarRegistros(request, response);
     }
 
@@ -104,9 +107,6 @@ public class ParentescoController extends HttpServlet {
         String param = request.getParameter("action");
         if(param.equals("save")) {
             registrarParentesco(request, response);
-        }
-        else if(param.equals("delete")) {
-            eliminarParentesco(request, response);
         }
         mostrarRegistros(request, response);
     }
