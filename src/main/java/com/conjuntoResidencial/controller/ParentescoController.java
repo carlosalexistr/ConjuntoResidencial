@@ -87,7 +87,7 @@ public class ParentescoController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String param = request.getParameter("action");
-        if(param.equals("delete")) {
+        if(param!=null && param.equals("delete")) {
             eliminarParentesco(Integer.parseInt(request.getParameter("id")));
         }
         mostrarRegistros(request, response);
@@ -105,7 +105,7 @@ public class ParentescoController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String param = request.getParameter("action");
-        if(param.equals("save")) {
+        if(param!=null && param.equals("save")) {
             registrarParentesco(request, response);
         }
         mostrarRegistros(request, response);

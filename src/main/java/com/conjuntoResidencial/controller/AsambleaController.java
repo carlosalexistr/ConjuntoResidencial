@@ -7,9 +7,15 @@ package com.conjuntoResidencial.controller;
 
 import com.conjuntoResidencial.dao.AsambleaDAO.AsambleaDAOImpl;
 import com.conjuntoResidencial.model.Asamblea;
+import com.conjuntoResidencial.model.Parentesco;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name="AsambleaController", urlPatterns={"/Asamblea"})
 public class AsambleaController extends HttpServlet {
 
+    AsambleaDAOImpl asambleaImpl = new AsambleaDAOImpl();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -60,12 +67,34 @@ public class AsambleaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        String param = request.getParameter("action");
+        if(param!=null && param.equals("delete")) {
+            eliminarAsamblea(Integer.parseInt(request.getParameter("id")));
+        }
+        mostrarRegistros(request, response);
         
-        AsambleaDAOImpl asam = new AsambleaDAOImpl();
-        List<Asamblea> asambleas = asam.findAll();
+    }
+    
+   public void mostrarRegistros(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Asamblea> asambleas = asambleaImpl.findAll();
         request.setAttribute("asambleas", asambleas);
         request.getRequestDispatcher("/Asambleas.jsp").forward(request, response);
+    }
+
+    public void registrarAsamblea(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ParseException {
+        Asamblea asamblea = new Asamblea();
+        asamblea.setDescripcion(request.getParameter("descripcion"));
+        asamblea.setId(Integer.parseInt(request.getParameter("id")));
+        asamblea.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
+        asamblea.setLugar(request.getParameter("lugar"));
+        asambleaImpl.save(asamblea);
+    }
+    
+    public void eliminarAsamblea(int id)
+            throws ServletException, IOException {
+        
     }
 
     /**
@@ -79,7 +108,15 @@ public class AsambleaController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String param = request.getParameter("action");
+        if(param!=null && param.equals("save")) {
+            try {
+                registrarAsamblea(request, response);
+            } catch (ParseException ex) {
+                Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        mostrarRegistros(request, response);
     }
 
     /**
