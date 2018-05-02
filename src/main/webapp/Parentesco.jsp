@@ -15,7 +15,7 @@
     <body>
         <h1>Parentesco</h1>
 
-        <form action="ParentescoController" method="post">
+        <form action="ParentescoController?action=save" method="post">
             <ul>
                 <li><label>Id</label><input type="text" name="id">
                 </li>
@@ -51,6 +51,17 @@
         </tbody>
 
     </table>
+        <br><br>
+        <br>
+        
+        <form action="ParentescoController?action=delete" method="post">
+            <ul>
+                <li><label>Id</label><input type="text" name="id">
+                </li>
+                <br>
+                <li><input type="submit" value="eliminar" name=""> </li>
+            </ul>
+        </form>
 
 
 </body>

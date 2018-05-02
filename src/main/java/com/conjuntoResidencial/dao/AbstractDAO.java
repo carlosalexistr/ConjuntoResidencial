@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -63,17 +64,25 @@ public abstract class AbstractDAO<T, PK> {
     }
     
     public T update( T entity ){
+        /*this.getEntityManager().getTransaction().begin();
         this.getEntityManager().merge(entity);
+        this.getEntityManager().getTransaction().commit();*/
+        this.save(entity);
         return entity;
    }
  
+    @Transactional
     public void delete(T entity) {
+        this.getEntityManager().getTransaction().begin();
         this.getEntityManager().remove(entity);
+        this.getEntityManager().getTransaction().commit();
     }
     
+    @Transactional
     public void deleteByKey(PK key) {
+        this.getEntityManager().getTransaction().begin();
         this.getEntityManager().remove( this.getEntityManager().merge(this.findByKey(key)) );
-        this.getEntityManager().flush();
+        this.getEntityManager().getTransaction().commit();
     }
      
     protected CriteriaBuilder createEntityCriteria(){

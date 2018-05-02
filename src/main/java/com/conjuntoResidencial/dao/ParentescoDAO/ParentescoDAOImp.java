@@ -8,6 +8,7 @@ package com.conjuntoResidencial.dao.ParentescoDAO;
 import com.conjuntoResidencial.dao.AbstractDAO;
 import com.conjuntoResidencial.model.Parentesco;
 import java.util.List;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -39,6 +40,7 @@ public class ParentescoDAOImp extends AbstractDAO implements ParentescoDAO {
          super.delete(poll);
     }
 
+    @Transactional
     public void deleteById(Integer id) {
          super.deleteByKey(id);  
     }
