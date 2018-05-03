@@ -5,17 +5,12 @@
  */
 package com.conjuntoResidencial.controller;
 
-import com.conjuntoResidencial.dao.AsambleaDAO.AsambleaDAOImpl;
-import com.conjuntoResidencial.model.Asamblea;
-import com.conjuntoResidencial.model.Parentesco;
+import com.conjuntoResidencial.dao.PersonaDAO.PersonaDAOImpl;
+import com.conjuntoResidencial.dao.TipoDAO.TipoDAOImpl;
+import com.conjuntoResidencial.dao.ViviendaDAO.ViviendaDAOImpl;
+import com.conjuntoResidencial.model.Vivienda;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +21,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Julian Olarte Torres
  */
-@WebServlet(name="AsambleaController", urlPatterns={"/Asamblea"})
-public class AsambleaController extends HttpServlet {
+@WebServlet(name = "ViviendaController", urlPatterns = {"/Vivienda"})
+public class ViviendaController extends HttpServlet {
 
-    AsambleaDAOImpl asambleaImpl = new AsambleaDAOImpl();
+    private ViviendaDAOImpl viviendaimpl = new ViviendaDAOImpl();
+    private PersonaDAOImpl personaimpl = new PersonaDAOImpl();
+    private TipoDAOImpl tipoimpl = new TipoDAOImpl();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,15 +44,16 @@ public class AsambleaController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AsambleaController</title>");            
+            out.println("<title>Servlet ViviendaController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AsambleaController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViviendaController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -69,32 +67,37 @@ public class AsambleaController extends HttpServlet {
             throws ServletException, IOException {
         String param = request.getParameter("action");
         if(param!=null && param.equals("delete")) {
-            eliminarAsamblea(Integer.parseInt(request.getParameter("id")));
+            this.deleteVivienda(Integer.parseInt(request.getParameter("id")));
         }
-        mostrarRegistros(request, response);
+        this.mostrarResultados(request, response);
+    }
+    
+    public void mostrarResultados(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         
+        request.setAttribute("personas", this.personaimpl.findAll());
+        request.setAttribute("tipos", this.tipoimpl.findAll());
+        request.setAttribute("viviendas", this.viviendaimpl.findAll());
+        
+        request.getRequestDispatcher("/Vivienda.jsp").forward(request, response);
     }
     
-   public void mostrarRegistros(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        List<Asamblea> asambleas = asambleaImpl.findAll();
-        request.setAttribute("asambleas", asambleas);
-        request.getRequestDispatcher("/Asambleas.jsp").forward(request, response);
-    }
-
-    public void registrarAsamblea(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
-        Asamblea asamblea = new Asamblea();
-        asamblea.setDescripcion(request.getParameter("descripcion"));
-        asamblea.setId(Integer.parseInt(request.getParameter("id")));
-        asamblea.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
-        asamblea.setLugar(request.getParameter("lugar"));
-        asambleaImpl.save(asamblea);
+    public void deleteVivienda(int number) {
+        this.viviendaimpl.deleteById(number);
     }
     
-    public void eliminarAsamblea(int id)
-            throws ServletException, IOException {
-        this.asambleaImpl.deleteById(id);
+    public void saveVivienda(HttpServletRequest request, HttpServletResponse response) {
+        int numero = Integer.parseInt(request.getParameter("numero"));
+        int tipo = Integer.parseInt(request.getParameter("tipo"));
+        String responsable = request.getParameter("responsable");
+        String observacion = request.getParameter("observacion");
+        
+        Vivienda vivienda = new Vivienda();
+        vivienda.setNumero(numero);
+        vivienda.setObservacion(observacion);
+        vivienda.setResponsable(this.personaimpl.findById(responsable));
+        vivienda.setTipo(this.tipoimpl.findById(tipo));
+       this.viviendaimpl.save(vivienda);
     }
 
     /**
@@ -110,13 +113,9 @@ public class AsambleaController extends HttpServlet {
             throws ServletException, IOException {
         String param = request.getParameter("action");
         if(param!=null && param.equals("save")) {
-            try {
-                registrarAsamblea(request, response);
-            } catch (ParseException ex) {
-                Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.saveVivienda(request, response);
         }
-        mostrarRegistros(request, response);
+        this.mostrarResultados(request, response);
     }
 
     /**

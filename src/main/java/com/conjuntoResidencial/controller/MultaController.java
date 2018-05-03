@@ -9,12 +9,10 @@ import com.conjuntoResidencial.dao.MultaDAO.MultaDAOImpl;
 import com.conjuntoResidencial.dao.ReciboDAO.ReciboDAOImpl;
 import com.conjuntoResidencial.dao.ViviendaDAO.ViviendaDAOImpl;
 import com.conjuntoResidencial.model.Multa;
-import com.conjuntoResidencial.model.Recibo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -30,6 +28,9 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "MultaController", urlPatterns = {"/Multa"})
 public class MultaController extends HttpServlet {
 
+    private ReciboDAOImpl reciboimpl = new ReciboDAOImpl();
+    private ViviendaDAOImpl viviendaimpl = new ViviendaDAOImpl();
+    private MultaDAOImpl multaimpl = new MultaDAOImpl();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,25 +58,14 @@ public class MultaController extends HttpServlet {
 
     }
 
-    public void registrarMulta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
-
-        Multa multa = new Multa();
-        String Observacion = request.getParameter("observacion");
-        multa.setObservacion(Observacion);
-        multa.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
-        multa.setUsuario(request.getParameter("persona"));
-
-        Integer recibo = Integer.parseInt(request.getParameter("recibo"));
-        ReciboDAOImpl re = new ReciboDAOImpl();
-        multa.setRecibo(re.findById(recibo));
-
-        Integer vivienda = Integer.parseInt(request.getParameter("vivienda"));
-        ViviendaDAOImpl vi = new ViviendaDAOImpl();
-        multa.setVivienda(vi.findById(vivienda));
+    public void mostrarResultados(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         
-        MultaDAOImpl m = new MultaDAOImpl();
-        m.save(multa);
+        request.setAttribute("multas", this.multaimpl.findAll());
+        request.setAttribute("recibos", this.reciboimpl.findAll());
+        request.setAttribute("viviendas", this.viviendaimpl.findAll());
+        
+        request.getRequestDispatcher("/Multa.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -90,9 +80,35 @@ public class MultaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String param = request.getParameter("action");
+        if(param!=null && param.equals("delete")) {
+            this.deleteMulta(Integer.parseInt(request.getParameter("id")));
+        }
+        this.mostrarResultados(request, response);
     }
 
+    public void deleteMulta(int number) {
+        this.multaimpl.deleteById(number);
+    }
+    
+    public void registrarMulta(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+        int numero = Integer.parseInt(request.getParameter("numero"));
+        int vivienda = Integer.parseInt(request.getParameter("vivienda"));
+        String fecha = request.getParameter("fecha");
+        String observacion = request.getParameter("observacion");
+        int recibo = Integer.parseInt(request.getParameter("recibo"));
+        String usuario = request.getParameter("usuario");
+        
+        Multa multa = new Multa();
+        multa.setNumero(numero);
+        multa.setVivienda(this.viviendaimpl.findById(vivienda));
+        multa.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
+        multa.setObservacion(observacion);
+        multa.setRecibo(this.reciboimpl.findById(recibo));
+        multa.setUsuario(usuario);
+        
+       this.multaimpl.save(multa);
+    }
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -105,11 +121,15 @@ public class MultaController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            registrarMulta(request, response);
+            String param = request.getParameter("action");
+            if(param!=null && param.equals("save")) {
+                this.registrarMulta(request, response);
+            }
         } catch (ParseException ex) {
             Logger.getLogger(MultaController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("ERROR: " + ex.getMessage());
         }
+        this.mostrarResultados(request, response);
     }
 
     /**

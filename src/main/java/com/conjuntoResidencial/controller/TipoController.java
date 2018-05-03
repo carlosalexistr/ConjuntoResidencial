@@ -5,17 +5,13 @@
  */
 package com.conjuntoResidencial.controller;
 
-import com.conjuntoResidencial.dao.AsambleaDAO.AsambleaDAOImpl;
-import com.conjuntoResidencial.model.Asamblea;
-import com.conjuntoResidencial.model.Parentesco;
+import com.conjuntoResidencial.dao.TipoDAO.TipoDAOImpl;
+import com.conjuntoResidencial.model.Persona;
+import com.conjuntoResidencial.model.Tipo;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Julian Olarte Torres
  */
-@WebServlet(name="AsambleaController", urlPatterns={"/Asamblea"})
-public class AsambleaController extends HttpServlet {
+@WebServlet(name = "TipoController", urlPatterns = {"/Tipo"})
+public class TipoController extends HttpServlet {
 
-    AsambleaDAOImpl asambleaImpl = new AsambleaDAOImpl();
+    private TipoDAOImpl tipoimpl = new TipoDAOImpl();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -47,15 +43,16 @@ public class AsambleaController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AsambleaController</title>");            
+            out.println("<title>Servlet TipoController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AsambleaController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet TipoController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -69,32 +66,33 @@ public class AsambleaController extends HttpServlet {
             throws ServletException, IOException {
         String param = request.getParameter("action");
         if(param!=null && param.equals("delete")) {
-            eliminarAsamblea(Integer.parseInt(request.getParameter("id")));
+            this.eliminarTipo(Integer.parseInt(request.getParameter("id")));
         }
-        mostrarRegistros(request, response);
+        this.mostrarTipos(request, response);
         
     }
     
-   public void mostrarRegistros(HttpServletRequest request, HttpServletResponse response)
+    public void mostrarTipos(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        List<Asamblea> asambleas = asambleaImpl.findAll();
-        request.setAttribute("asambleas", asambleas);
-        request.getRequestDispatcher("/Asambleas.jsp").forward(request, response);
-    }
-
-    public void registrarAsamblea(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException {
-        Asamblea asamblea = new Asamblea();
-        asamblea.setDescripcion(request.getParameter("descripcion"));
-        asamblea.setId(Integer.parseInt(request.getParameter("id")));
-        asamblea.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
-        asamblea.setLugar(request.getParameter("lugar"));
-        asambleaImpl.save(asamblea);
+        List<Tipo> tipos = this.tipoimpl.findAll();
+        request.setAttribute("tipos", tipos);
+        request.getRequestDispatcher("/Tipo.jsp").forward(request, response);
     }
     
-    public void eliminarAsamblea(int id)
-            throws ServletException, IOException {
-        this.asambleaImpl.deleteById(id);
+    public void eliminarTipo(int id) {
+        this.tipoimpl.deleteById(id);
+    }
+    
+    public void saveTipo(HttpServletRequest request, HttpServletResponse response) {
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        BigDecimal medida = new BigDecimal(request.getParameter("medida"));
+        Integer condominio = Integer.parseInt(request.getParameter("condominio"));
+        Tipo tipo = new Tipo();
+        
+        tipo.setId(id);
+        tipo.setMedida(medida);
+        tipo.setCondominio(condominio);
+        this.tipoimpl.save(tipo);
     }
 
     /**
@@ -110,13 +108,9 @@ public class AsambleaController extends HttpServlet {
             throws ServletException, IOException {
         String param = request.getParameter("action");
         if(param!=null && param.equals("save")) {
-            try {
-                registrarAsamblea(request, response);
-            } catch (ParseException ex) {
-                Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.saveTipo(request, response);
         }
-        mostrarRegistros(request, response);
+        this.mostrarTipos(request, response);
     }
 
     /**
