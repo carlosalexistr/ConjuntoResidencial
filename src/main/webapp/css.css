@@ -1,0 +1,133 @@
+header{
+	background-color: #b6c3dc;
+	text-align: center;
+	
+}
+
+header h1{
+	padding-top: 3%;
+	font-size: 45px;
+	padding-bottom: 2%;
+	text-shadow: -3px 0px 2px #2d0000;
+        color: #414d61;
+}
+
+main{
+	background-color: #f1ecec;
+	margin: 5%;
+	margin-top: 1%;
+	text-align: center;
+	padding: 2%;
+}
+
+footer{
+	background-color: black;
+	color: white;
+}
+
+.row div{
+	margin-bottom: 10px;
+	text-align: left;
+}
+
+.btn{
+	width: 100%;
+	margin-top: 2%;
+}
+
+.inp{
+	width: 80%!important;
+}
+
+.inpu{
+	width: 100%!important;
+}
+
+.check{
+	width: 20px;
+	height: 20px;
+	margin: 10px!important;
+}
+
+
+main picture img{
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+#sesion{
+
+	display: inline-block;
+	padding: 7px;
+	margin-right: 10px;
+
+}
+
+#sesion:hover{
+	background-color: #528a9a;
+}
+
+#registro{
+	
+	padding: 7px;
+}
+
+#registro:hover{
+	background-color: #528a9a;
+}
+
+
+.navbar-default .navbar-nav>li>a {
+    color: #000;
+}
+
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a {
+    background-image: linear-gradient(to bottom,#528a9a 0,#528a9a 100%);
+    color:#000;
+}
+
+.navbar-default {
+    background-image: linear-gradient(to bottom,#5bc0de 0,#5bc0de 100%);
+}
+
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover {
+    color: #000;
+    background-color: #528a9a!important;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a {
+box-shadow: inset 0 3px 9px #528a9a;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+    color: #000;
+}
+
+.navbar-brand, .navbar-nav>li>a {
+    text-shadow: 0 0px 0 #000;
+}
+
+main picture img{
+    	width: 100%;
+    }
+
+
+@media only screen and (max-width: 1000px) {
+    header h1{
+    	font-size: 30px;
+    }
+}
+
+
+@media only screen and (max-width: 650px) {
+    header h1{
+    	font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 352px) {
+    header h1{
+    	font-size: 20px;
+    }
+}
