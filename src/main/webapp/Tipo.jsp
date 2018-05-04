@@ -33,7 +33,7 @@
                             <label for="condominio">Condominio</label>
                             <input type="text" class="form-control" id="condominio" placeholder="Condominio" name="condominio">
                         </div>
-                        <input type="submit" value="registrar" class="btn btn-primary">
+                         <input type="submit" value="registrar" class="btn btnf btn-primary">
                     </form>
                 </div>
                 

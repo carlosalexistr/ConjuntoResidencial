@@ -29,41 +29,22 @@
             <div class="row">
                 <div class="col-6">
                     <form action="Multa?action=save" method="post">
-                      <div class="form-group">
+                       <div class="form-group">
                             <label for="vivienda">Vivienda</label>
-
-                            <%
-                                ViviendaDAOImpl v = new ViviendaDAOImpl();
-                                List<Vivienda> viviendas = v.findAll();
-                            %>
                             <select name="vivienda" id="vivienda" class="form-control">
-                                <%
-                                    for (Vivienda vi : viviendas) {
-
-                                %>
-                                <option value=<%= vi.getNumero()%>><%= vi.getNumero()%> - <%=vi.getResponsable().getNombre()%></option> 
-                                <%
-                                    }
-                                %>
+                                <c:forEach items="${viviendas}" var="vivienda">
+                                    <option selected value="${vivienda.getNumero()}">${vivienda.getNumero()} - ${vivienda.getResponsable().getNombre()}</option>
+                                </c:forEach>
                             </select>
                         </div> 
                             
-                            <div class="form-group">
+                           
+                        <div class="form-group">
                             <label for="persona">Persona</label>
-
-                            <%
-                                PersonaDAOImpl p = new PersonaDAOImpl();
-                                List<Persona> personas = p.findAll();
-                            %>
-                            <select name="persona" id="persona" class="form-control">
-                                <%
-                                    for (Persona pi : personas) {
-
-                                %>
-                                <option value=<%= pi.getNombre()%>><%= pi.getNombre()%> - <%=pi.getDocumento()%></option> 
-                                <%
-                                    }
-                                %>
+                            <select name="cabeza" id="cabeza" class="form-control">
+                                <c:forEach items="${persona}" var="persona">
+                                    <option selected value="${persona.getDocumento()}">${persona.getDocumento()} - ${persona.getNombre()}</option>
+                                </c:forEach>
                             </select>
                         </div>
                         
@@ -79,8 +60,10 @@
                             
                             <div class="form-group">
                             <label for="responsable">Responsable</label>
-                            <input type="text" class="form-control" documento="responsable" placeholder="Responsable" name="responsable">
+                            <input type="text" class="form-control" id="responsable" placeholder="Responsable" name="responsable">
                         </div>
+                            
+                             <input type="submit" value="registrar" class="btn btnf btn-primary">
                        
                     </form>
                 </div>
@@ -138,7 +121,7 @@
                                     </td>
                           
                                     <td>
-                                        <a href="Asamblea?action=delete&id=${asamblea.getId()}" class="btn btn-danger">Eliminar</a>
+                                        <a href="Asamblea?action=delete&id=${inquilino.getVivienda()}" class="btn btn-danger">Eliminar</a>
                                     </td>
                                 </tr>
                             </c:forEach>

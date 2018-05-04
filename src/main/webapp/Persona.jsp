@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
         <title>Persona</title>
     </head>
     <body>
@@ -45,7 +46,7 @@
                             <label for="clave">Clave</label>
                             <input type="password" class="form-control" id="clave" placeholder="Clave" name="clave">
                         </div>
-                        <input type="submit" value="registrar" class="btn btn-primary">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
                     </form>
                 </div>
                 

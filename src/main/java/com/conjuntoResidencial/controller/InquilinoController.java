@@ -5,16 +5,17 @@
  */
 package com.conjuntoResidencial.controller;
 
-import com.conjuntoResidencial.dao.MultaDAO.MultaDAOImpl;
-import com.conjuntoResidencial.dao.ReciboDAO.ReciboDAOImpl;
+import com.conjuntoResidencial.dao.InquilinoDAO.InquilinoDAOImpl;
+import com.conjuntoResidencial.dao.PersonaDAO.PersonaDAOImpl;
 import com.conjuntoResidencial.dao.ViviendaDAO.ViviendaDAOImpl;
-import com.conjuntoResidencial.model.Multa;
+import com.conjuntoResidencial.model.Inquilino;
+import com.conjuntoResidencial.model.InquilinoPK;
+import com.conjuntoResidencial.model.Persona;
+import com.conjuntoResidencial.model.Vivienda;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,12 +26,13 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author DELL
  */
-@WebServlet(name = "MultaController", urlPatterns = {"/Multa"})
-public class MultaController extends HttpServlet {
+@WebServlet(name = "InquilinoController", urlPatterns = {"/Inquilino"})
+public class InquilinoController extends HttpServlet {
 
-    private ReciboDAOImpl reciboimpl = new ReciboDAOImpl();
-    private ViviendaDAOImpl viviendaimpl = new ViviendaDAOImpl();
-    private MultaDAOImpl multaimpl = new MultaDAOImpl();
+    ViviendaDAOImpl viviendaimpl = new ViviendaDAOImpl();
+    PersonaDAOImpl peresonaImpl = new PersonaDAOImpl();
+    InquilinoDAOImpl inquilinoImpl = new InquilinoDAOImpl();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,46 +50,53 @@ public class MultaController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet MultaController</title>");
+            out.println("<title>Servlet InquilinoController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet MultaController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet InquilinoController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-
     }
 
     public void mostrarResultados(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        request.setAttribute("multas", this.multaimpl.findAll());
-        request.setAttribute("recibos", this.reciboimpl.findAll());
+
+        request.setAttribute("persona", this.peresonaImpl.findAll());
         request.setAttribute("viviendas", this.viviendaimpl.findAll());
-        
-        request.getRequestDispatcher("/Multa.jsp").forward(request, response);
+        request.setAttribute("inquilino", this.inquilinoImpl.findAll());
+
+        request.getRequestDispatcher("/Inquilino.jsp").forward(request, response);
     }
-      public void deleteMulta(int number) {
-        this.multaimpl.deleteById(number);
+
+    public void deleteInquilino(int number) {
+
+//          inquilinoImpl.deleteById(number);
     }
-    
-    public void registrarMulta(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-        int numero = Integer.parseInt(request.getParameter("numero"));
-        int vivienda = Integer.parseInt(request.getParameter("vivienda"));
-        String fecha = request.getParameter("fecha");
-        String observacion = request.getParameter("observacion");
-        int recibo = Integer.parseInt(request.getParameter("recibo"));
-        String usuario = request.getParameter("usuario");
+
+    public void registrarInquilino(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+
+        String fecha = request.getParameter("fechaF");
+        String fechaI = request.getParameter("fecha");
+        Persona p = new Persona();
+        p=peresonaImpl.findById(request.getParameter("cabeza"));
+        Vivienda v = new Vivienda();
         
-        Multa multa = new Multa();
-        multa.setNumero(numero);
-        multa.setVivienda(this.viviendaimpl.findById(vivienda));
-        multa.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
-        multa.setObservacion(observacion);
-        multa.setRecibo(this.reciboimpl.findById(recibo));
-        multa.setUsuario(usuario);
+        v= viviendaimpl.findById(Integer.parseInt(request.getParameter("vivienda")));
+
+        Inquilino inquilino = new Inquilino();
+        inquilino.setFechafin(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
+        inquilino.setPersona1(p);
+        inquilino.setVivienda1(v);
+        inquilino.setResponsable(Integer.parseInt(request.getParameter("responsable")));
+        InquilinoPK inquilinoPk = new InquilinoPK();
+        inquilinoPk.setFechainicio(new SimpleDateFormat("yyyy-MM-dd").parse(fechaI));
+        inquilinoPk.setPersona(p.getDocumento());
+        inquilinoPk.setVivienda(v.getNumero());
         
-       this.multaimpl.save(multa);
+        inquilino.setInquilinoPK(inquilinoPk);
+        inquilinoImpl.save(inquilino);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -102,14 +111,9 @@ public class MultaController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String param = request.getParameter("action");
-        if(param!=null && param.equals("delete")) {
-            this.deleteMulta(Integer.parseInt(request.getParameter("id")));
-        }
-        this.mostrarResultados(request, response);
+        processRequest(request, response);
     }
 
-  
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -121,16 +125,7 @@ public class MultaController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String param = request.getParameter("action");
-            if(param!=null && param.equals("save")) {
-                this.registrarMulta(request, response);
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(MultaController.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("ERROR: " + ex.getMessage());
-        }
-        this.mostrarResultados(request, response);
+        processRequest(request, response);
     }
 
     /**

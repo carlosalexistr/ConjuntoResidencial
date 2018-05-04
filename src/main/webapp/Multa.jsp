@@ -18,6 +18,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
         <title>JSP Page</title>
     </head>
     <body>
@@ -26,9 +27,10 @@
             <div class="row">
                 <h1 class="text-primary">Multa</h1>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <form action="Multa?action=save" method="post">
+
+            <form action="Multa?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="numero">Numero</label>
                             <input type="text" class="form-control" id="numero" placeholder="Numero" name="numero">
@@ -49,6 +51,9 @@
                                 </c:forEach>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-6">
+
                         <div class="form-group">
                             <label for="usuario">Usuario</label>
                             <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario">
@@ -61,11 +66,13 @@
                             <label for="fecha">Fecha</label>
                             <input type="date" class="form-control" id="fecha" placeholder="Fecha" name="fecha">
                         </div>
-                        <input type="submit" value="registrar" class="btn btn-primary">
-                    </form>
-                </div>
 
-            </div>
+                    </div>
+                    <div class="col-4 offset-4">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
+                    </div>
+                </div>   
+            </form>
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">

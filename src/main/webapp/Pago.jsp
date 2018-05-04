@@ -83,7 +83,7 @@
                             <label for="fecha">Fecha</label>
                             <input type="date" class="form-control" id="fecha" placeholder="Fecha" name="fecha">
                         </div>
-                        <input type="submit" value="registrar" class="btn btn-primary">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
                     </form>
                 </div>
 

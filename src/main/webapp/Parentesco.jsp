@@ -13,6 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
         <title>JSP Page</title>
     </head>
     <body>
@@ -31,7 +32,7 @@
                             <label for="description">Descripción</label>
                             <input type="text" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
                         </div>
-                        <input type="submit" value="registrar" class="btn btn-primary">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
                     </form>
                 </div>
                 

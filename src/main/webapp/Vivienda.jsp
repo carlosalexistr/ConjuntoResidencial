@@ -46,7 +46,7 @@
                             </select>
                         </div>
 
-                        <input type="submit" value="registrar" class="btn btn-primary">
+                         <input type="submit" value="registrar" class="btn btnf btn-primary">
                     </form>
                 </div>
                 

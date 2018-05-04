@@ -54,7 +54,7 @@
                             <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario">
                         </div>
 
-                        <input type="submit" value="registrar" class="btn btn-primary">
+                         <input type="submit" value="registrar" class="btn btnf btn-primary">
                     </form>
                 </div>
                 

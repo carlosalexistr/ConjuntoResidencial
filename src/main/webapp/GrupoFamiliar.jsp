@@ -12,23 +12,24 @@
 
 <!DOCTYPE html>
 <html>
-    
-   <head>
+
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+         <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
         <title>JSP Page</title>
     </head>
-    
+
     <body>
 
         <div class="container">
             <div class="row">
                 <h1 class="text-primary">Grupo Familiar</h1>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <form action="Multa?action=save" method="post">
 
+            <form action="GrupoFamiliar?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="id">Id</label>
                             <input type="text" class="form-control" id="id" placeholder="Id" name="id">
@@ -45,117 +46,110 @@
                         </div>
 
 
-
                         <div class="form-group">
                             <label for="parentesco">Parentesco</label>
-
-                            <%
-                                ParentescoDAOImp pa = new ParentescoDAOImp();
-                                List<Parentesco> parentesco = pa.findAll();
-                            %>
                             <select name="parentesco" id="parentesco" class="form-control">
-                                <%
-                                    for (Parentesco p : parentesco) {
-
-                                %>
-                                <option value=<%= p.getId()%> - <%=p.getDescripcion()%></option> 
-                                <%
-                                    }
-                                %>
+                                <c:forEach items="${parentesco}" var="parentesco">
+                                    <option selected value="${parentesco.getId()}">${parentesco.getId()} - ${parentesco.getDescripcion()}</option>
+                                </c:forEach>
                             </select>
                         </div>
-                
+                    </div>
+                    <div class="col-6">
 
-            <div class="form-group">
-                <label for="celular">Celular</label>
-                <input type="text" class="form-control" id="celular" placeholder="Celular" name="celular">
-            </div>
+                        <div class="form-group">
+                            <label for="celular">Celular</label>
+                            <input type="text" class="form-control" id="celular" placeholder="Celular" name="celular">
+                        </div>
 
-            <div class="form-group">
-                <label for="cabeza">Cabeza Grupo</label>
-                <input type="text" class="form-control" id="cabeza" placeholder="Cabeza" name="cabeza">
-            </div>
+                        <div class="form-group">
+                            <label for="persona">Cabeza Grupo</label>
+                            <select name="cabeza" id="cabeza" class="form-control">
+                                <c:forEach items="${persona}" var="persona">
+                                    <option selected value="${persona.getDocumento()}">${persona.getDocumento()} - ${persona.getNombre()}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
 
-            <div class="form-group">
-                    <label for="fecha">Fecha Nacimiento</label>
-                    <input type="date" class="form-control" id="fecha" placeholder="Fecha Nacimiento" name="fecha">
+                        <div class="form-group">
+                            <label for="fecha">Fecha Nacimiento</label>
+                            <input type="date" class="form-control" id="fecha" placeholder="Fecha Nacimiento" name="fecha">
+                        </div>
+                    </div>
+
+                    <div class="col-4 offset-4">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
+                    </div>
                 </div>
-                <input type="submit" value="registrar" class="btn btn-primary">
-                </form>
-            </div> 
-        </div>
-                        
-            <div class="row mt-5">
-                <div class="col-12">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Id
-                                </th>
-                                <th>
-                                    Documento
-                                </th>                   
-                                <th>
-                                    Nombre
-                                </th>                   
-                                <th>
-                                    Parentesco
-                                </th>                   
-                                <th>
-                                    Celular
-                                </th> 
-                                
-                                <th>
-                                    Cabeza Grupo
-                                </th> 
-                                <th>
-                                    Fecha
-                                </th> 
-                                
-                                <th>
-                                    Acciones
-                                </th> 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${pago}" var="pago">
+                        </form>
+                    
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <table class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        ${pago.getId}
-                                    </td>
-                                    <td>
-                                        ${asamblea.getDescripcion()}
-                                    </td>
-                                    <td>
-                                        <c:out value = "${asamblea.getFecha()}"/>
-                                    </td>
-                                    <td>
-                                        ${asamblea.getLugar()}
-                                    </td>
-                                    <td>
-                                        ${asamblea.getLugar()}
-                                    </td>
-                                    
-                                    <td>
-                                        ${asamblea.getLugar()}
-                                    </td>
-                                    
-                                    <td>
-                                        ${asamblea.getLugar()}
-                                    </td>
-                                    
-                                    
-                                    <td>
-                                        <a href="Asamblea?action=delete&id=${asamblea.getId()}" class="btn btn-danger">Eliminar</a>
-                                    </td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>
+                                    <th>
+                                        Id
+                                    </th>
+                                    <th>
+                                        Documento
+                                    </th>                   
+                                    <th>
+                                        Nombre
+                                    </th>                   
+                                    <th>
+                                        Parentesco
+                                    </th>                   
+                                    <th>
+                                        Celular
+                                    </th> 
 
-                    </table>
+                                    <th>
+                                        Cabeza Grupo
+                                    </th> 
+                                    <th>
+                                        Fecha
+                                    </th> 
+
+                                    <th>
+                                        Acciones
+                                    </th> 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${grupofamiliar}" var="grupofamiliar">
+                                    <tr>
+                                        <td>
+                                            ${grupofamiliar.getId()}
+                                        </td>
+                                        <td>
+                                            ${grupofamiliar.getDocumento()}
+                                        </td>
+                                        <td>
+                                            ${grupofamiliar.getNombre()}
+                                        </td>
+                                        <td>
+                                            ${grupofamiliar.getParentesco().getDescripcion()}
+                                        </td>
+                                        <td>
+                                            ${grupofamiliar.getCelular()}
+                                        </td>
+                                        <td>
+                                            ${grupofamiliar.getCabeza().getNombre()}
+                                        </td>
+                                        <td>
+                                            <c:out value = "${grupofamiliar.getFechanacimiento()}"/>
+                                        </td>
+                                        <td>
+                                            <a href="GrupoFamiliar?action=delete&id=${grupofamiliar.getId()}" class="btn btn-danger">Eliminar</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
-            </div>
         </div>
 
 
