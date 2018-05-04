@@ -28,7 +28,7 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <form action="Multa?action=save" method="post">
+                    <form action="Inquilino?action=save" method="post">
                        <div class="form-group">
                             <label for="vivienda">Vivienda</label>
                             <select name="vivienda" id="vivienda" class="form-control">
@@ -75,53 +75,48 @@
                         <thead>
                             <tr>
                                 <th>
-                                    documento
+                                    Vivienda
                                 </th>
                                 <th>
-                                    nombre
+                                    Persona
                                 </th>                   
                                 <th>
-                                    Email
+                                    Fecha Inicio
                                 </th>                   
                                 <th>
-                                    Celular
+                                    Fecha Fin
                                 </th> 
                                 
                                 <th>
-                                    Direccion
-                                </th> 
-                                <th>
-                                    Clave
-                                </th> 
+                                    Responsasble
+                                </th>  
                                 <th>
                                     Acciones
-                                </th>                   
+                                </th> 
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${asambleas}" var="asamblea">
+                            <c:forEach items="${inquilino}" var="inquilino">
                                 <tr>
                                     <td>
-                                        ${asamblea.getId()}
+                                        ${inquilino.getVivienda1().getNumero()}
                                     </td>
                                     <td>
-                                        ${asamblea.getDescripcion()}
+                                        ${inquilino.getPersona1().getNombre()}
                                     </td>
                                     <td>
-                                        <c:out value = "${asamblea.getFecha()}"/>
+                                        <c:out value = "${inquilino.getInquilinoPK().getFechainicio()}"/>
                                     </td>
                                     <td>
-                                        ${asamblea.getLugar()}
+                                        <c:out value = "${inquilino.getFechafin()}"/>
                                     </td>
-                                     <td>
-                                        ${asamblea.getLugar()}
+                                    <td>
+                                        ${inquilino.getResponsable()}
                                     </td>
-                                     <td>
-                                        ${asamblea.getLugar()}
-                                    </td>
+                                  
                           
                                     <td>
-                                        <a href="Asamblea?action=delete&id=${inquilino.getVivienda()}" class="btn btn-danger">Eliminar</a>
+                                        <a href="Inquilino?action=delete&vivienda=${inquilino.getInquilinoPK().getVivienda()}&persona=${inquilino.getInquilinoPK().getPersona()}&fechai=${inquilino.getInquilinoPK().getFechainicio()}" class="btn btn-danger">Eliminar</a>
                                     </td>
                                 </tr>
                             </c:forEach>

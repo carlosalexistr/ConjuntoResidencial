@@ -16,6 +16,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,9 +72,12 @@ public class InquilinoController extends HttpServlet {
         request.getRequestDispatcher("/Inquilino.jsp").forward(request, response);
     }
 
-    public void deleteInquilino(int number) {
+    public void deleteInquilino(int vivienda, String persona, Date fechaI) {
+        
+        InquilinoPK inquiPK = new InquilinoPK(vivienda, persona, fechaI);
+        System.out.println("recivido:  "+vivienda + persona + fechaI);
 
-//          inquilinoImpl.deleteById(number);
+          inquilinoImpl.deleteById(inquiPK);
     }
 
     public void registrarInquilino(HttpServletRequest request, HttpServletResponse response) throws ParseException {
@@ -111,7 +117,20 @@ public class InquilinoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         String param = request.getParameter("action");
+        if(param!=null && param.equals("delete")) {
+            System.out.println("DATOOSSS:  " + request.getParameter("vivienda") +" - "+ request.getParameter("persona") + " - " + request.getParameter("fechai"));
+            int vivienda = Integer.parseInt(request.getParameter("vivienda"));
+            String persona = request.getParameter("persona");
+             try {
+                 Date fechaI = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fechai"));
+                 System.out.println("fechaaa: " + fechaI);
+                 deleteInquilino(vivienda, persona, fechaI);
+             } catch (ParseException ex) {
+                 Logger.getLogger(InquilinoController.class.getName()).log(Level.SEVERE, null, ex);
+             }           
+        }
+        mostrarResultados(request, response);
     }
 
     /**
@@ -125,7 +144,16 @@ public class InquilinoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+          try {
+            String param = request.getParameter("action");
+            if(param!=null && param.equals("save")) {
+                this.registrarInquilino(request, response);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(MultaController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR: " + ex.getMessage());
+        }
+        this.mostrarResultados(request, response);
     }
 
     /**
