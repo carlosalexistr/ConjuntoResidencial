@@ -75,8 +75,6 @@ public class InquilinoController extends HttpServlet {
     public void deleteInquilino(int vivienda, String persona, Date fechaI) {
         
         InquilinoPK inquiPK = new InquilinoPK(vivienda, persona, fechaI);
-        System.out.println("recivido:  "+vivienda + persona + fechaI);
-
           inquilinoImpl.deleteById(inquiPK);
     }
 
@@ -91,6 +89,7 @@ public class InquilinoController extends HttpServlet {
         v= viviendaimpl.findById(Integer.parseInt(request.getParameter("vivienda")));
 
         Inquilino inquilino = new Inquilino();
+        System.out.println("FECHAAA: "+ fecha + " - " + new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
         inquilino.setFechafin(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
         inquilino.setPersona1(p);
         inquilino.setVivienda1(v);

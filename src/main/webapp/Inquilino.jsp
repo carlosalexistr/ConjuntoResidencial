@@ -14,12 +14,12 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
         <title>JSP Page</title>
     </head>
-    
+
     <body>
 
         <div class="container">
@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-6">
                     <form action="Inquilino?action=save" method="post">
-                       <div class="form-group">
+                        <div class="form-group">
                             <label for="vivienda">Vivienda</label>
                             <select name="vivienda" id="vivienda" class="form-control">
                                 <c:forEach items="${viviendas}" var="vivienda">
@@ -37,8 +37,8 @@
                                 </c:forEach>
                             </select>
                         </div> 
-                            
-                           
+
+
                         <div class="form-group">
                             <label for="persona">Persona</label>
                             <select name="cabeza" id="cabeza" class="form-control">
@@ -47,24 +47,28 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        
-                            <div class="form-group">
+
+                        <div class="form-group">
                             <label for="fecha">Fecha Inicio</label>
                             <input type="date" class="form-control" id="fecha" placeholder="Fecha Inicio" name="fecha">
                         </div>
-                            
-                            <div class="form-group">
+
+                        <div class="form-group">
                             <label for="fechaF">Fecha Fin</label>
                             <input type="date" class="form-control" id="fechaF" placeholder="Fecha Fin" name="fechaF">
                         </div>
-                            
-                            <div class="form-group">
-                            <label for="responsable">Responsable</label>
-                            <input type="text" class="form-control" id="responsable" placeholder="Responsable" name="responsable">
+
+                        <div class="form-group">
+                            <label for="persona">Responsable</label>
+                            <select name="responsable" id="responsable" class="form-control">
+                                <c:forEach items="${persona}" var="persona">
+                                    <option selected value="${persona.getDocumento()}">${persona.getDocumento()} - ${persona.getNombre()}</option>
+                                </c:forEach>
+                            </select>
                         </div>
-                            
-                             <input type="submit" value="registrar" class="btn btnf btn-primary">
-                       
+
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
+
                     </form>
                 </div>
 
@@ -86,7 +90,7 @@
                                 <th>
                                     Fecha Fin
                                 </th> 
-                                
+
                                 <th>
                                     Responsasble
                                 </th>  
@@ -113,8 +117,8 @@
                                     <td>
                                         ${inquilino.getResponsable()}
                                     </td>
-                                  
-                          
+
+
                                     <td>
                                         <a href="Inquilino?action=delete&vivienda=${inquilino.getInquilinoPK().getVivienda()}&persona=${inquilino.getInquilinoPK().getPersona()}&fechai=${inquilino.getInquilinoPK().getFechainicio()}" class="btn btn-danger">Eliminar</a>
                                     </td>

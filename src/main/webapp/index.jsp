@@ -56,9 +56,9 @@
                         <ul class="dropdown-menu">
                            <li><a href="Asamblea" id="cliente" data-seleccion="polonia"> Asambleas </a></li>
                            <li><a href="GrupoFamiliar" id="mensajero" data-seleccion="senegal"> Grupo Familiar </a></li>
-                           <li><a href="#" id="envio" data-seleccion="colombia" > Inquilino </a></li>
+                           <li><a href="Inquilino" id="envio" data-seleccion="colombia" > Inquilino </a></li>
                            <li><a href="Multa" id="cliente" data-seleccion="polonia"> Multa </a></li>
-                           <li><a href="#" id="mensajero" data-seleccion="senegal"> Pago </a></li>
+                           <li><a href="Pago" id="mensajero" data-seleccion="senegal"> Pago </a></li>
                            <li><a href="Parentesco" id="envio" data-seleccion="colombia" > Parentesco </a></li>
                            <li><a href="Persona" id="cliente" data-seleccion="polonia"> Persona </a></li>
                            <li><a href="#" id="mensajero" data-seleccion="senegal"> Recibo </a></li>

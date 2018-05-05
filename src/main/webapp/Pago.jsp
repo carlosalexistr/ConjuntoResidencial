@@ -14,12 +14,13 @@
 
 <!DOCTYPE html>
 <html>
-   <head>
+    <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
         <title>JSP Page</title>
     </head>
-    
+
     <body>
 
         <div class="container">
@@ -28,56 +29,38 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <form action="Multa?action=save" method="post">
+                    <form action="Pago?action=save" method="post">
                         <div class="form-group">
                             <label for="id">Id</label>
                             <input type="text" class="form-control" id="id" placeholder="Id" name="id">
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="description">Tipo</label>
                             <input type="text" class="form-control" id="tipo" placeholder="Tipo" name="tipo">
                         </div>
+
                         <div class="form-group">
                             <label for="recibo">Recibo</label>
-
-                            <%
-                                ReciboDAOImpl re = new ReciboDAOImpl();
-                                List<Recibo> recibo = re.findAll();
-                            %>
                             <select name="recibo" id="recibo" class="form-control">
-                                <%
-                                    for (Recibo r : recibo) {
-
-                                %>
-                                <option value=<%= r.getNumero()%> - <%=r.getUsuario()%></option> 
-                                <%
-                                    }
-                                %>
+                                <c:forEach items="${recibo}" var="recibo">
+                                    <option selected value="${recibo.getNumero()}">${recibo.getNumero()} - ${recibo.getUsuario()}</option>
+                                </c:forEach>
                             </select>
                         </div>
-                    
-                            <div class="form-group">
-                            <label for="usuario">Usuario</label>
 
-                            <%
-                                 PersonaDAOImpl p = new PersonaDAOImpl();
-                                List<Persona> user = p.findAll();
-                            %>
-                            <select name="persona" id="persona" class="form-control">
-                                <%
-                                    for (Persona pe : user) {
-
-                                %>
-                                <option value=<%= pe.getDocumento()%>><%= pe.getDocumento()%> - <%=pe.getNombre()%></option> 
-                                <%
-                                    }
-                                %>
+                        <div class="form-group">
+                            <label for="persona">Usuario</label>
+                            <select name="usuario" id="usuario" class="form-control">
+                                <c:forEach items="${persona}" var="persona">
+                                    <option selected value="${persona.getDocumento()}">${persona.getDocumento()} - ${persona.getNombre()}</option>
+                                </c:forEach>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label for="description">Valor</label>
-                            <input type="text" class="form-control" id="valor" placeholder="Valor" name="Valor">
+                            <input type="text" class="form-control" id="valor" placeholder="Valor" name="valor">
                         </div>
                         <div class="form-group">
                             <label for="fecha">Fecha</label>
@@ -96,6 +79,9 @@
                                 <th>
                                     Id
                                 </th>
+                                 <th>
+                                    Tipo
+                                </th>
                                 <th>
                                     Recibo
                                 </th>                   
@@ -108,7 +94,7 @@
                                 <th>
                                     Fecha
                                 </th> 
-                                
+
                                 <th>
                                     Acciones
                                 </th> 
@@ -118,22 +104,25 @@
                             <c:forEach items="${pago}" var="pago">
                                 <tr>
                                     <td>
-                                        ${pago.getId}
+                                        ${pago.getNumero()}
                                     </td>
                                     <td>
-                                        ${asamblea.getDescripcion()}
+                                        ${pago.getTipo()}
                                     </td>
                                     <td>
-                                        <c:out value = "${asamblea.getFecha()}"/>
+                                        ${pago.getRecibo().getNumero()}
                                     </td>
                                     <td>
-                                        ${asamblea.getLugar()}
+                                        ${pago.getUsuario()}
                                     </td>
                                     <td>
-                                        ${asamblea.getLugar()}
+                                        ${pago.getValor()}
                                     </td>
                                     <td>
-                                        <a href="Asamblea?action=delete&id=${asamblea.getId()}" class="btn btn-danger">Eliminar</a>
+                                        <c:out value = "${pago.getFechapago()}"/>
+                                    </td>
+                                    <td>
+                                        <a href="Pago?action=delete&id=${pago.getNumero()}" class="btn btn-danger">Eliminar</a>
                                     </td>
                                 </tr>
                             </c:forEach>
