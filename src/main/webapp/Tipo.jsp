@@ -16,7 +16,7 @@
     </head>
     <body>
         <div class="container">
-             <div class="row">
+            <div class="row">
                 <div class="col-6">
                     <h1 class="text-primary">Tipo</h1>
                 </div>
@@ -26,9 +26,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <form action="Tipo?action=save" method="post">
+
+            <form action="Tipo?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="id">Id</label>
                             <input type="text" class="form-control" id="id" placeholder="Id" name="id">
@@ -37,15 +38,19 @@
                             <label for="medida">Medida</label>
                             <input type="text" class="form-control" id="medida" placeholder="Medida" name="medida">
                         </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="condominio">Condominio</label>
                             <input type="text" class="form-control" id="condominio" placeholder="Condominio" name="condominio">
                         </div>
-                         <input type="submit" value="registrar" class="btn btnf btn-primary">
-                    </form>
-                </div>
-                
-            </div>
+                    </div>
+                    <div class="col-4 offset-4">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
+                    </div>
+                </div>   
+            </form>
+
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">
@@ -59,7 +64,10 @@
                                 </th>                   
                                 <th>
                                     Condominio
-                                </th>                                    
+                                </th> 
+                                 <th>
+                                    Acciones
+                                </th> 
                             </tr>
                         </thead>
                         <tbody>

@@ -48,7 +48,7 @@
                     </div>
                 </div> 
             </form>
-            
+
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">
@@ -76,6 +76,7 @@
                                     </td>
                                     <td>
                                         <a href="Parentesco?action=delete&id=${parentesco.getId()}" class="btn btn-danger">Eliminar</a>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Actuaizar</button>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -84,6 +85,28 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Modal -->
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
 

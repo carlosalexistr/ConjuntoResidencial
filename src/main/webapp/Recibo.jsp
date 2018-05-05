@@ -16,7 +16,7 @@
     </head>
     <body>
         <div class="container">
-             <div class="row">
+            <div class="row">
                 <div class="col-6">
                     <h1 class="text-primary">Recivo</h1>
                 </div>
@@ -26,9 +26,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <form action="Recibo?action=save" method="post">
+            <form action="Recibo?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="numero">Numero</label>
                             <input type="text" class="form-control" id="numero" placeholder="Numero" name="numero">
@@ -45,6 +45,8 @@
                             <label for="fecha">Fecha</label>
                             <input type="date" class="form-control" id="fecha" placeholder="Fecha" name="fecha">
                         </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="responsable">Responsable</label>
                             <select class="custom-select" id="responsable" name="responsable">
@@ -62,11 +64,12 @@
                             <input type="text" class="form-control" id="usuario" placeholder="Usuario" name="usuario">
                         </div>
 
-                         <input type="submit" value="registrar" class="btn btnf btn-primary">
-                    </form>
-                </div>
-                
-            </div>
+                    </div>
+                    <div class="col-4 offset-4">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
+                    </div>
+                </div>   
+            </form>
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">

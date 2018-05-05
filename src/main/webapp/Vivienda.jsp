@@ -16,7 +16,7 @@
     </head>
     <body>
         <div class="container">
-             <div class="row">
+            <div class="row">
                 <div class="col-6">
                     <h1 class="text-primary">Vivienda</h1>
                 </div>
@@ -26,9 +26,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <form action="Vivienda?action=save" method="post">
+
+            <form action="Vivienda?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="numero">Numero</label>
                             <input type="text" class="form-control" id="numero" placeholder="Numero" name="numero">
@@ -37,6 +38,8 @@
                             <label for="observacion">Observacion</label>
                             <textarea type="text" class="form-control" id="observacion" placeholder="Observacion" name="observacion"></textarea>
                         </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="responsable">Resppnsable</label>
                             <select class="custom-select" id="responsable" name="responsable">
@@ -54,11 +57,13 @@
                             </select>
                         </div>
 
-                         <input type="submit" value="registrar" class="btn btnf btn-primary">
-                    </form>
-                </div>
-                
-            </div>
+                    </div>
+                    <div class="col-4 offset-4">
+                        <input type="submit" value="registrar" class="btn btnf btn-primary">
+                    </div>
+                </div>   
+            </form>
+
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">
