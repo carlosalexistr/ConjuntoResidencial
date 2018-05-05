@@ -20,6 +20,25 @@ main{
 	padding: 2%;
 }
 
+#volver{
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    background-color: #218cff;
+}
+
+#volver a{
+    text-decoration: none;
+    color: white;
+}
+
+#volver:hover{
+    background-color: #63abf9;
+}
+
 footer{
 	background-color: black;
 	color: white;

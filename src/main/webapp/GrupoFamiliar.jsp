@@ -23,8 +23,15 @@
     <body>
 
         <div class="container">
-            <div class="row">
-                <h1 class="text-primary">Grupo Familiar</h1>
+             <div class="row">
+                <div class="col-6">
+                    <h1 class="text-primary">Grupo Familiar</h1>
+                </div>
+                <div class="col-2 offset-4">
+                    <div id="volver">    
+                        <a  href="index.jsp">Volver</a>
+                    </div>
+                </div>
             </div>
 
             <form action="GrupoFamiliar?action=save" method="post">

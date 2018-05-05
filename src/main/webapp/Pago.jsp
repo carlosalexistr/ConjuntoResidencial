@@ -25,11 +25,19 @@
 
         <div class="container">
             <div class="row">
-                <h1 class="text-primary">Pago</h1>
-            </div>
-            <div class="row">
                 <div class="col-6">
-                    <form action="Pago?action=save" method="post">
+                    <h1 class="text-primary">Pago</h1>
+                </div>
+                <div class="col-2 offset-4">
+                    <div id="volver">    
+                        <a  href="index.jsp">Volver</a>
+                    </div>
+                </div>
+            </div>
+
+            <form action="Pago?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="id">Id</label>
                             <input type="text" class="form-control" id="id" placeholder="Id" name="id">
@@ -48,7 +56,8 @@
                                 </c:forEach>
                             </select>
                         </div>
-
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="persona">Usuario</label>
                             <select name="usuario" id="usuario" class="form-control">
@@ -66,11 +75,13 @@
                             <label for="fecha">Fecha</label>
                             <input type="date" class="form-control" id="fecha" placeholder="Fecha" name="fecha">
                         </div>
+                    </div>
+                    <div class="col-4 offset-4">
                         <input type="submit" value="registrar" class="btn btnf btn-primary">
-                    </form>
-                </div>
+                    </div>
+                </div> 
+            </form>
 
-            </div>
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">
@@ -79,7 +90,7 @@
                                 <th>
                                     Id
                                 </th>
-                                 <th>
+                                <th>
                                     Tipo
                                 </th>
                                 <th>

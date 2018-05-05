@@ -11,12 +11,20 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
         <title>Vivienda</title>
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <h1 class="text-primary">Vivienda</h1>
+             <div class="row">
+                <div class="col-6">
+                    <h1 class="text-primary">Vivienda</h1>
+                </div>
+                <div class="col-2 offset-4">
+                    <div id="volver">    
+                        <a  href="index.jsp">Volver</a>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-6">

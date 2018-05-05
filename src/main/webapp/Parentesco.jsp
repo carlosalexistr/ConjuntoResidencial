@@ -19,24 +19,36 @@
     <body>
         <div class="container">
             <div class="row">
-                <h1 class="text-primary">Parentesco</h1>
-            </div>
-            <div class="row">
                 <div class="col-6">
-                    <form action="Parentesco?action=save" method="post">
+                    <h1 class="text-primary">Parentesco</h1>
+                </div>
+                <div class="col-2 offset-4">
+                    <div id="volver">    
+                        <a  href="index.jsp">Volver</a>
+                    </div>
+                </div>
+            </div>
+            <form action="Parentesco?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="id">Id</label>
                             <input type="text" class="form-control" id="id" placeholder="Id" name="id">
                         </div>
+                    </div>
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="description">Descripción</label>
                             <input type="text" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
                         </div>
+
+                    </div>
+                    <div class="col-4 offset-4">
                         <input type="submit" value="registrar" class="btn btnf btn-primary">
-                    </form>
-                </div>
-                
-            </div>
+                    </div>
+                </div> 
+            </form>
+            
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">

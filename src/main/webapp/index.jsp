@@ -61,9 +61,9 @@
                            <li><a href="Pago" id="mensajero" data-seleccion="senegal"> Pago </a></li>
                            <li><a href="Parentesco" id="envio" data-seleccion="colombia" > Parentesco </a></li>
                            <li><a href="Persona" id="cliente" data-seleccion="polonia"> Persona </a></li>
-                           <li><a href="#" id="mensajero" data-seleccion="senegal"> Recibo </a></li>
-                           <li><a href="#" id="envio" data-seleccion="colombia" > Tipo </a></li>
-                           <li><a href="#" id="envio" data-seleccion="colombia" > Vivienda </a></li>
+                           <li><a href="Recibo" id="mensajero" data-seleccion="senegal"> Recibo </a></li>
+                           <li><a href="Tipo" id="envio" data-seleccion="colombia" > Tipo </a></li>
+                           <li><a href="Vivienda" id="envio" data-seleccion="colombia" > Vivienda </a></li>
                         </ul>
                         </li>
                     </ul>

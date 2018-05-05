@@ -17,6 +17,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
         <title>JSP Page</title>
     </head>
 
@@ -24,11 +25,19 @@
 
         <div class="container">
             <div class="row">
-                <h1 class="text-primary">Inquilino</h1>
-            </div>
-            <div class="row">
                 <div class="col-6">
-                    <form action="Inquilino?action=save" method="post">
+                    <h1 class="text-primary">Inquilino</h1>
+                </div>
+                <div class="col-2 offset-4">
+                    <div id="volver">    
+                        <a  href="index.jsp">Volver</a>
+                    </div>
+                </div>
+            </div>
+
+            <form action="Inquilino?action=save" method="post">
+                <div class="row">
+                    <div class="col-6">
                         <div class="form-group">
                             <label for="vivienda">Vivienda</label>
                             <select name="vivienda" id="vivienda" class="form-control">
@@ -53,6 +62,9 @@
                             <input type="date" class="form-control" id="fecha" placeholder="Fecha Inicio" name="fecha">
                         </div>
 
+                    </div>
+                    <div class="col-6">
+
                         <div class="form-group">
                             <label for="fechaF">Fecha Fin</label>
                             <input type="date" class="form-control" id="fechaF" placeholder="Fecha Fin" name="fechaF">
@@ -67,12 +79,14 @@
                             </select>
                         </div>
 
+                    </div>
+                    <div class="col-4 offset-4">
                         <input type="submit" value="registrar" class="btn btnf btn-primary">
+                    </div>
+                </div> 
 
-                    </form>
-                </div>
+            </form>
 
-            </div>
             <div class="row mt-5">
                 <div class="col-12">
                     <table class="table table-bordered">
