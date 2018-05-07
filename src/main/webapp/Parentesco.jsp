@@ -91,12 +91,12 @@
                                                     <div class="modal-body">
                                                         <p>Editar el Registro ${parentesco.getId()}</p>
 
-                                                        <form action="Parentesco?action=save" method="post">
+                                                        <form action="Parentesco?action=editar" method="post">
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <div class="form-group">
                                                                         <label for="id">Id</label>
-                                                                        <input type="text" value=${parentesco.getId()} class="form-control" id="id" placeholder="Id" name="id" disabled>
+                                                                        <input type="text" value=${parentesco.getId()} class="form-control" id="id" placeholder="Id" name="id" readonly="readonly">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
