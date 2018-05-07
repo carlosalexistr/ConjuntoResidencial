@@ -35,6 +35,7 @@ public class GrupoFamiliarController extends HttpServlet {
     GrupoFamiliarDAOImpl grufa = new GrupoFamiliarDAOImpl();
     ParentescoDAOImp parentescoImpl = new ParentescoDAOImp();
     PersonaDAOImpl personaImpl = new PersonaDAOImpl();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -52,7 +53,7 @@ public class GrupoFamiliarController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GrupoFamiliarController</title>");            
+            out.println("<title>Servlet GrupoFamiliarController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet GrupoFamiliarController at " + request.getContextPath() + "</h1>");
@@ -60,37 +61,54 @@ public class GrupoFamiliarController extends HttpServlet {
             out.println("</html>");
         }
     }
-    
-       public void mostrarRegistros(HttpServletRequest request, HttpServletResponse response)
+
+    public void mostrarRegistros(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Grupofamiliar> grupofamiliar = grufa.findAll();
         request.setAttribute("grupofamiliar", grupofamiliar);
-        
-         List<Parentesco> parentesco = parentescoImpl.findAll();
+
+        List<Parentesco> parentesco = parentescoImpl.findAll();
         request.setAttribute("parentesco", parentesco);
-        
-         List<Persona> persona = personaImpl.findAll();
+
+        List<Persona> persona = personaImpl.findAll();
         request.setAttribute("persona", persona);
-        
+
         request.getRequestDispatcher("/GrupoFamiliar.jsp").forward(request, response);
     }
-         public void registrarGrupoFamiliar(HttpServletRequest request, HttpServletResponse response)
+
+    public void registrarGrupoFamiliar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
         Grupofamiliar grupoFamiliar = new Grupofamiliar();
-             PersonaDAOImpl p = new PersonaDAOImpl();
+        PersonaDAOImpl p = new PersonaDAOImpl();
         grupoFamiliar.setCabeza(p.findById(request.getParameter("cabeza")));
         grupoFamiliar.setCelular(request.getParameter("celular"));
         grupoFamiliar.setFechanacimiento(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
-             ParentescoDAOImp parentescoImp = new ParentescoDAOImp();
+        ParentescoDAOImp parentescoImp = new ParentescoDAOImp();
         grupoFamiliar.setParentesco(parentescoImp.findById(Integer.parseInt(request.getParameter("parentesco"))));
         grupoFamiliar.setId(Integer.parseInt(request.getParameter("id")));
         grupoFamiliar.setDocumento(request.getParameter("documento"));
         grupoFamiliar.setNombre(request.getParameter("nombre"));
         grufa.save(grupoFamiliar);
     }
-      public void eliminarGrupoFamiiar(int id)
+
+    public void eliminarGrupoFamiiar(int id)
             throws ServletException, IOException {
         this.grufa.deleteById(id);
+    }
+
+    public void editarGrupoFamiliar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ParseException {
+        Grupofamiliar grupoFamiliar = new Grupofamiliar();
+        PersonaDAOImpl p = new PersonaDAOImpl();
+        grupoFamiliar.setCabeza(p.findById(request.getParameter("cabeza")));
+        grupoFamiliar.setCelular(request.getParameter("celular"));
+        grupoFamiliar.setFechanacimiento(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
+        ParentescoDAOImp parentescoImp = new ParentescoDAOImp();
+        grupoFamiliar.setParentesco(parentescoImp.findById(Integer.parseInt(request.getParameter("parentesco"))));
+        grupoFamiliar.setId(Integer.parseInt(request.getParameter("id")));
+        grupoFamiliar.setDocumento(request.getParameter("documento"));
+        grupoFamiliar.setNombre(request.getParameter("nombre"));
+        grufa.update(grupoFamiliar);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -106,7 +124,7 @@ public class GrupoFamiliarController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String param = request.getParameter("action");
-        if(param!=null && param.equals("delete")) {
+        if (param != null && param.equals("delete")) {
             this.eliminarGrupoFamiiar(Integer.parseInt(request.getParameter("id")));
         }
         this.mostrarRegistros(request, response);
@@ -123,10 +141,17 @@ public class GrupoFamiliarController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-              String param = request.getParameter("action");
-        if(param!=null && param.equals("save")) {
+        String param = request.getParameter("action");
+        if (param != null && param.equals("save")) {
             try {
                 registrarGrupoFamiliar(request, response);
+            } catch (ParseException ex) {
+                Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+         if (param != null && param.equals("editar")) {
+            try {
+                editarGrupoFamiliar(request, response);
             } catch (ParseException ex) {
                 Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
             }
