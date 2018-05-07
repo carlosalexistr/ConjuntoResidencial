@@ -76,34 +76,57 @@
                                     </td>
                                     <td>
                                         <a href="Parentesco?action=delete&id=${parentesco.getId()}" class="btn btn-danger">Eliminar</a>
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Actuaizar</button>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${parentesco.getId()}">Actuaizar</button>
+
+                                        <!-- Modal -->
+                                        <div id="myModal${parentesco.getId()}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title"></h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Editar el Registro ${parentesco.getId()}</p>
+
+                                                        <form action="Parentesco?action=save" method="post">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label for="id">Id</label>
+                                                                        <input type="text" value=${parentesco.getId()} class="form-control" id="id" placeholder="Id" name="id" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label for="description">Descripción</label>
+                                                                        <input type="text" value=${parentesco.getDescripcion()} class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-4 offset-4">
+                                                                    <input type="submit" value="Editar" class="btn btnf btn-primary">
+                                                                </div>
+                                                            </div> 
+                                                        </form>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </td>
-                                </tr>
-                            </c:forEach>
+                                </c:forEach>
+
+                            </tr>
                         </tbody>
 
                     </table>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div id="myModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Modal Header</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Some text in the modal.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
 

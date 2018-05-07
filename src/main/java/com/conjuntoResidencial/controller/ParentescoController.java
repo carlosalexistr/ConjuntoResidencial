@@ -36,7 +36,7 @@ public class ParentescoController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8" );
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -45,7 +45,7 @@ public class ParentescoController extends HttpServlet {
             out.println("<title>Servlet ParentescoController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ParentescoController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ParentescoController at " + request.getContextPath() + " QUE MAN TAN PRO </h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,6 +72,15 @@ public class ParentescoController extends HttpServlet {
     public void eliminarParentesco(int id)
             throws ServletException, IOException {
         p.deleteById(id);
+    }
+    
+    public void actualizarParentesco(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Parentesco pa = new Parentesco();
+        pa.setId(Integer.parseInt(request.getParameter("id")));
+        pa.setDescripcion(request.getParameter("descripcion"));
+        p.update(pa);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -107,6 +116,9 @@ public class ParentescoController extends HttpServlet {
         String param = request.getParameter("action");
         if(param!=null && param.equals("save")) {
             registrarParentesco(request, response);
+        }
+         if(param!=null && param.equals("editar")) {
+             actualizarParentesco(request, response);
         }
         mostrarRegistros(request, response);
     }
