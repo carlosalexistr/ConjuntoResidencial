@@ -68,6 +68,7 @@
                            <li><a href="Cargo" id="envio" data-seleccion="colombia" > Cargo </a></li>
                            <li><a href="Concepto" id="envio" data-seleccion="colombia" > Concepto </a></li>
                            <li><a href="Consejo" id="envio" data-seleccion="colombia" > Consejo </a></li>
+                           <li><a href="DetalleRecibo" id="envio" data-seleccion="colombia" > Detalle de recibo </a></li>
                         </ul>
                         </li>
                     </ul>
