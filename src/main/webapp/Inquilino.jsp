@@ -135,7 +135,84 @@
 
                                     <td>
                                         <a href="Inquilino?action=delete&vivienda=${inquilino.getInquilinoPK().getVivienda()}&persona=${inquilino.getInquilinoPK().getPersona()}&fechai=${inquilino.getInquilinoPK().getFechainicio()}" class="btn btn-danger">Eliminar</a>
-                                    </td>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${inquilino.getInquilinoPK().getVivienda()}${inquilino.getInquilinoPK().getPersona()}${inquilino.getInquilinoPK().getFechainicio()}">Actualizar</button>
+                                        <!-- Modal -->
+                                        <div id="myModal${inquilino.getInquilinoPK().getVivienda()}${inquilino.getInquilinoPK().getPersona()}${inquilino.getInquilinoPK().getFechainicio()}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title"></h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Editar el Registro ${inquilino.getInquilinoPK().getVivienda()}${inquilino.getInquilinoPK().getPersona()}${inquilino.getInquilinoPK().getFechainicio()}</p>
+                                                        <form action="Inquilino?action=editar" method="post">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    
+                                                                    <div class="form-group">
+                                                                        <label for="fecha">Vivienda</label>
+                                                                        <input readonly="readonly" type="text" value=${inquilino.getInquilinoPK().getVivienda()} class="form-control" id="vivienda" placeholder="vivienda" name="vivienda">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="fecha">Persona</label>
+                                                                        <input readonly="readonly" type="text" value=${inquilino.getInquilinoPK().getPersona()} class="form-control" id="cabeza" placeholder="persona" name="cabeza">
+                                                                    </div>
+
+
+                                                                    <div class="form-group">
+                                                                        <label for="fecha">Fecha Inicio</label>
+                                                                        <input readonly="readonly" type="date" value=${inquilino.getInquilinoPK().getFechainicio()} class="form-control" id="fecha" placeholder="Fecha Inicio" name="fecha">
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="col-6">
+
+                                                                    <div class="form-group">
+                                                                        <label for="fechaF">Fecha Fin</label>
+                                                                        <input type="date" value=${inquilino.getFechafin()} class="form-control" id="fechaF" placeholder="Fecha Fin" name="fechaF">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="persona">Responsable</label>
+                                                                        <select name="responsable" id="responsable" class="form-control">
+                                                                            <c:forEach items="${persona}" var="persona">
+                                                                                <c:choose>
+                                                                                    <c:when test = "${persona.getDocumento() == inquilino.getResponsable()}">
+                                                                                        <option selected value="${persona.getDocumento()}">${persona.getDocumento()} - ${persona.getNombre()}</option>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <option value="${persona.getDocumento()}">${persona.getDocumento()} - ${persona.getNombre()}</option>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                            </c:forEach>
+                                                                        </select>
+                                                                    </div>
+
+
+
+                                                                </div>
+                                                                <div class="col-4 offset-4">
+                                                                    <input type="submit" value="Actualizar" class="btn btnf btn-primary">
+                                                                </div>
+                                                            </div> 
+
+                                                        </form>
+
+
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
                                 </tr>
                             </c:forEach>
                         </tbody>
