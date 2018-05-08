@@ -4,8 +4,10 @@
     Author     : Julian Olarte Torres
 --%>
 
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -96,17 +98,17 @@
                                         ${consejo.getConsejoPK().getCargo()}
                                     </td>
                                     <td>
-                                        ${consejo.getConsejoPK().getFechainicio()}
+                                        <fmt:formatDate value="${consejo.getConsejoPK().getFechainicio()}" pattern="dd/MM/yyyy" />
                                     </td>
                                     <td>
-                                        ${consejo.getFechafin()}
+                                        <fmt:formatDate value="${consejo.getFechafin()}" pattern="dd/MM/yyyy" />
                                     </td>
                                     <td>
-                                        <a href="Consejo?action=delete&persona=${consejo.getConsejoPK().getPersona()}&cargo=${consejo.getConsejoPK().getCargo()}&fechainicio=${consejo.getConsejoPK().getFechainicio()}" class="btn btn-danger">Eliminar</a>
-                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${consejo.getConsejoPK().getPersona()}-${consejo.getConsejoPK().getCargo()}-${consejo.getConsejoPK().getFechainicio()}">Actualizar</button>
+                                        <a href="Consejo?action=delete&persona=${consejo.getConsejoPK().getPersona()}&cargo=${consejo.getConsejoPK().getCargo()}&fechainicio=${consejo.getConsejoPK().getFechainicio().getTime()}" class="btn btn-danger">Eliminar</a>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${consejo.getConsejoPK().getPersona()}-${consejo.getConsejoPK().getCargo()}-${consejo.getConsejoPK().getFechainicio().getTime()}">Actualizar</button>
 
                                         <!-- Modal -->
-                                        <div id="myModal${consejo.getConsejoPK().getPersona()}-${consejo.getConsejoPK().getCargo()}-${consejo.getConsejoPK().getFechainicio()}" class="modal fade" role="dialog">
+                                        <div id="myModal${consejo.getConsejoPK().getPersona()}-${consejo.getConsejoPK().getCargo()}-${consejo.getConsejoPK().getFechainicio().getTime()}" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
 
                                                 <!-- Modal content-->
@@ -123,29 +125,21 @@
                                                                 <div class="col-6">
                                                                     <div class="form-group">
                                                                         <label for="persona">Persona</label>
-                                                                        <select class="custom-select" id="persona" name="persona">
-                                                                            <c:forEach items="${personas}" var="persona">
-                                                                                <option selected="${consejo.getConsejoPK().getPersona().equals(persona.getDocumento()) ? selected : false}" value="${persona.getDocumento()}">${persona.getDocumento()} - ${persona.getNombre()}</option>
-                                                                            </c:forEach>
-                                                                        </select>                           
+                                                                        <input type="text" value="${consejo.getConsejoPK().getPersona()}" class="form-control" id="persona" placeholder="Persona" name="persona" readonly>                             
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="cargo">Cargo</label>
-                                                                        <select class="custom-select" id="cargo" name="cargo">
-                                                                            <c:forEach items="${cargos}" var="cargo">
-                                                                                <option selected="${consejo.getConsejoPK().getCargo().equals(cargo.getId()) ? selected : false}" value="${cargo.getId()}">${cargo.getId()} - ${cargo.getDescripcion()}</option>
-                                                                            </c:forEach>
-                                                                        </select>                           
+                                                                        <input type="text" value="${consejo.getConsejoPK().getCargo()}" class="form-control" id="cargo" placeholder="Cargo" name="cargo" readonly>                             
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="form-group">
                                                                         <label for="fechainicio">Fecha Inicio</label>
-                                                                        <input type="date" value="${consejo.getConsejoPK().getFechainicio()}" class="form-control" id="fechainicio" placeholder="Fecha inicio" name="fechainicio">
+                                                                        <input type="text" value='<fmt:formatDate value="${consejo.getConsejoPK().getFechainicio()}" pattern="dd/MM/yyyy" />' class="form-control" id="fechainicio" placeholder="Fecha inicio" name="fechainicio" readonly>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="fechafin">Fecha Fin</label>
-                                                                        <input type="date" value="${consejo.getFechafin()}" class="form-control" id="fechafin" placeholder="Fecha Fin" name="fechafin">
+                                                                        <input type="date" value='<fmt:formatDate value="${consejo.getFechafin()}" pattern="dd-MM-yyyy" />' class="form-control" id="fechafin" placeholder="Fecha Fin" name="fechafin">
                                                                     </div>
                                                                 </div>
 

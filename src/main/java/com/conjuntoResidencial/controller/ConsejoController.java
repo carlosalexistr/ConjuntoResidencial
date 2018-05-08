@@ -70,7 +70,8 @@ public class ConsejoController extends HttpServlet {
       public void deleteConsejo(HttpServletRequest request) throws ParseException {
         String persona = request.getParameter("persona");
         int cargo = Integer.parseInt(request.getParameter("cargo"));
-        Date fechainicio = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fechainicio"));
+        
+        Date fechainicio = new Date(Long.valueOf(request.getParameter("fechainicio")));
         this.consejoimpl.deleteById(new ConsejoPK(persona, cargo, fechainicio));
     }
     
