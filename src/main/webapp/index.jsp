@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>   
-        <title>TODO supply a title</title>
+        <title>Conjunto Residencial</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
         <!-- Optional theme -->
@@ -64,6 +64,10 @@
                            <li><a href="Recibo" id="mensajero" data-seleccion="senegal"> Recibo </a></li>
                            <li><a href="Tipo" id="envio" data-seleccion="colombia" > Tipo </a></li>
                            <li><a href="Vivienda" id="envio" data-seleccion="colombia" > Vivienda </a></li>
+                           <li><a href="Asistencia" id="envio" data-seleccion="colombia" > Asistencia </a></li>
+                           <li><a href="Cargo" id="envio" data-seleccion="colombia" > Cargo </a></li>
+                           <li><a href="Concepto" id="envio" data-seleccion="colombia" > Concepto </a></li>
+                           <li><a href="Consejo" id="envio" data-seleccion="colombia" > Consejo </a></li>
                         </ul>
                         </li>
                     </ul>

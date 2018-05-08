@@ -6,11 +6,16 @@
 package com.conjuntoResidencial.controller;
 
 import com.conjuntoResidencial.dao.AsambleaDAO.AsambleaDAOImpl;
+import com.conjuntoResidencial.dao.AsistenciaDAO.AsistenciaDAO;
+import com.conjuntoResidencial.dao.AsistenciaDAO.AsistenciaDAOImpl;
+import com.conjuntoResidencial.dao.ViviendaDAO.ViviendaDAOImpl;
 import com.conjuntoResidencial.model.Asamblea;
+import com.conjuntoResidencial.model.Asistencia;
+import com.conjuntoResidencial.model.AsistenciaPK;
+import com.conjuntoResidencial.model.Vivienda;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,10 +29,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Julian Olarte Torres
  */
-@WebServlet(name="AsambleaController", urlPatterns={"/Asamblea"})
-public class AsambleaController extends HttpServlet {
+@WebServlet(name="AsistenciaController", urlPatterns={"/Asistencia"})
+public class AsistenciaController extends HttpServlet {
 
-    AsambleaDAOImpl asambleaImpl = new AsambleaDAOImpl();
+    AsistenciaDAO asistenciaimpl = new AsistenciaDAOImpl();
+    AsambleaDAOImpl asambleaimpl = new AsambleaDAOImpl();
+    ViviendaDAOImpl viviendaimpl = new ViviendaDAOImpl();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -67,7 +74,7 @@ public class AsambleaController extends HttpServlet {
             throws ServletException, IOException {
         String param = request.getParameter("action");
         if(param!=null && param.equals("delete")) {
-            eliminarAsamblea(Integer.parseInt(request.getParameter("id")));
+            eliminarAsitencia(Integer.parseInt(request.getParameter("asamblea")), Integer.parseInt(request.getParameter("vivienda")));
         }
         mostrarRegistros(request, response);
         
@@ -75,34 +82,34 @@ public class AsambleaController extends HttpServlet {
     
    public void mostrarRegistros(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Asamblea> asambleas = asambleaImpl.findAll();
+        List<Asistencia> asistencias = this.asistenciaimpl.findAll();
+        List<Asamblea> asambleas = this.asambleaimpl.findAll();
+        List<Vivienda> viviendas = this.viviendaimpl.findAll();
+        request.setAttribute("asistencias", asistencias);
+        request.setAttribute("viviendas", viviendas);
         request.setAttribute("asambleas", asambleas);
-        request.getRequestDispatcher("/Asambleas.jsp").forward(request, response);
+        request.getRequestDispatcher("/Asistencia.jsp").forward(request, response);
     }
 
-    public void registrarAsamblea(HttpServletRequest request, HttpServletResponse response)
+    public void registrarAsistencia(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
-        Asamblea asamblea = new Asamblea();
-        asamblea.setDescripcion(request.getParameter("descripcion"));
-        asamblea.setId(Integer.parseInt(request.getParameter("id")));
-        asamblea.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
-        asamblea.setLugar(request.getParameter("lugar"));
-        asambleaImpl.save(asamblea);
+        Asistencia asistencia = new Asistencia(Integer.parseInt(request.getParameter("asamblea")), Integer.parseInt(request.getParameter("vivienda")));
+        asistencia.setObservacion(request.getParameter("observacion"));
+        asistencia.setAsistio(null!=request.getParameter("asistio"));
+        this.asistenciaimpl.save(asistencia);
     }
     
-    public void editarAsamblea(HttpServletRequest request, HttpServletResponse response)
+    public void editarAsistencia(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
-        Asamblea asamblea = new Asamblea();
-        asamblea.setDescripcion(request.getParameter("descripcion"));
-        asamblea.setId(Integer.parseInt(request.getParameter("id")));
-        asamblea.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
-        asamblea.setLugar(request.getParameter("lugar"));
-        asambleaImpl.update(asamblea);
+        Asistencia asistencia = new Asistencia(Integer.parseInt(request.getParameter("asamblea")), Integer.parseInt(request.getParameter("vivienda")));
+        asistencia.setObservacion(request.getParameter("observacion"));
+        asistencia.setAsistio(null!=request.getParameter("asistio"));
+        this.asistenciaimpl.update(asistencia);
     }
     
-    public void eliminarAsamblea(int id)
+    public void eliminarAsitencia(int asamblea, int vivienda)
             throws ServletException, IOException {
-        this.asambleaImpl.deleteById(id);
+        this.asistenciaimpl.deleteById(new AsistenciaPK(asamblea, vivienda));
     }
 
     /**
@@ -119,14 +126,14 @@ public class AsambleaController extends HttpServlet {
         String param = request.getParameter("action");
         if(param!=null && param.equals("save")) {
             try {
-                registrarAsamblea(request, response);
+                registrarAsistencia(request, response);
             } catch (ParseException ex) {
                 Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         if(param!=null && param.equals("editar")) {
             try {
-                editarAsamblea(request, response);
+                editarAsistencia(request, response);
             } catch (ParseException ex) {
                 Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
             }

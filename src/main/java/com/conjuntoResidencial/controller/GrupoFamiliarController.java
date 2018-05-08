@@ -146,7 +146,7 @@ public class GrupoFamiliarController extends HttpServlet {
             try {
                 registrarGrupoFamiliar(request, response);
             } catch (ParseException ex) {
-                Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AsistenciaController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
          if (param != null && param.equals("editar")) {

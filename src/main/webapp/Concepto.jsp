@@ -1,6 +1,6 @@
 <%-- 
     Document   : Asambleas
-    Created on : 1/05/2018, 05:29:40 PM
+    Created on : 7/05/2018, 05:29:40 PM
     Author     : Julian Olarte Torres
 --%>
 
@@ -12,13 +12,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
-        <title>JSP Page</title>
+        <title>Concepto</title>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <h1 class="text-primary">Asamblea</h1>
+                    <h1 class="text-primary">Concepto</h1>
                 </div>
                 <div class="col-2 offset-4">
                     <div id="volver">    
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <form action="Asamblea?action=save" method="post">
+            <form action="Concepto?action=save" method="post">
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -35,20 +35,22 @@
                             <input type="text" class="form-control" id="id" placeholder="Id" name="id">
                         </div>
                         <div class="form-group">
-                            <label for="fecha">Fecha</label>
-                            <input type="date" class="form-control" id="fecha" placeholder="Fecha" name="fecha">
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-group">
                             <label for="description">Descripción</label>
                             <input type="text" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
                         </div>
+                    </div>
+                    <div class="col-6">
+                        <br>
                         <div class="form-group">
-                            <label for="lugar">Lugar</label>
-                            <input type="text" class="form-control" id="lugar" placeholder="Lugar" name="lugar">
+                            <div class="form-check">
+                                <label class="form-check-label" for="estado">
+                                    <input type="checkbox" class="form-check-input" id="estado" value="" placeholder="Estado" name="estado">
+                                    Estado
+                                </label>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="col-4 offset-4">
                         <input type="submit" value="registrar" class="btn btnf btn-primary">
                     </div>
@@ -65,39 +67,33 @@
                         </th>
                         <th>
                             Descripcion
-                        </th>                   
+                        </th>                                   
                         <th>
-                            Fecha
-                        </th>                   
-                        <th>
-                            Lugar
-                        </th>                   
+                            Estado
+                        </th>                                   
                         <th>
                             Acciones
                         </th>                   
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${asambleas}" var="asamblea">
+                    <c:forEach items="${conceptos}" var="concepto">
                         <tr>
                             <td>
-                                ${asamblea.getId()}
+                                ${concepto.getId()}
                             </td>
                             <td>
-                                ${asamblea.getDescripcion()}
+                                ${concepto.getDescripcion()}
                             </td>
                             <td>
-                                <c:out value = "${asamblea.getFecha()}"/>
+                                ${concepto.getEstado()}
                             </td>
                             <td>
-                                ${asamblea.getLugar()}
-                            </td>
-                            <td>
-                                <a href="Asamblea?action=delete&id=${asamblea.getId()}" class="btn btn-danger">Eliminar</a>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${asamblea.getId()}">Actualizar</button>
+                                <a href="Concepto?action=delete&id=${concepto.getId()}" class="btn btn-danger">Eliminar</a>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${concepto.getId()}">Actualizar</button>
 
                                 <!-- Modal -->
-                                <div id="myModal${asamblea.getId()}" class="modal fade" role="dialog">
+                                <div id="myModal${concepto.getId()}" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
 
                                         <!-- Modal content-->
@@ -107,37 +103,28 @@
                                                 <h4 class="modal-title"></h4>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Editar el Registro ${asamblea.getId()}</p>
+                                                <p>Editar el Registro ${concepto.getId()}</p>
 
-                                                <form action="Asamblea?action=editar" method="post">
+                                                <form action="Concepto?action=editar" method="post">
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="id">Id</label>
-                                                                <input type="text" value=${asamblea.getId()} class="form-control" id="id" placeholder="Id" name="id" readonly="readonly">
+                                                                <input type="text" value=${concepto.getId()} class="form-control" id="id" placeholder="Id" name="id" readonly="readonly">
                                                             </div>
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="description">Descripción</label>
-                                                                <input type="text" value="${asamblea.getDescripcion()}" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
+                                                                <input type="text" value="${concepto.getDescripcion()}" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
                                                             </div>
-
-                                                        </div>
-                                                        <div class="col-6">
                                                             <div class="form-group">
-                                                                <label for="fecha">Fecha</label>
-                                                                <input type="date" class="form-control"value="${asamblea.getFecha()}" id="fecha" placeholder="Fecha" name="fecha">
+                                                                <label for="estado">Estado</label>
+                                                                <input type="checkbox" ${concepto.getEstado().equals(true) ? "checked='checked'" : ""} value="${concepto.getEstado()}" class="form-control" id="estado" placeholder="Estado" name="estado">
                                                             </div>
 
                                                         </div>
-                                                        <div class="col-6">
-                                                            <div class="form-group">
-                                                                <label for="lugar">Lugar</label>
-                                                                <input type="text" class="form-control"value="${asamblea.getLugar()}" id="lugar" placeholder="Lugar" name="lugar">
-                                                            </div>
-
-                                                        </div>
+                                                        
                                                         <div class="col-4 offset-4">
                                                             <input type="submit" value="Editar" class="btn btnf btn-primary">
                                                         </div>
