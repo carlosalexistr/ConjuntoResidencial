@@ -64,6 +64,8 @@
                            <li><a href="Recibo" id="mensajero" data-seleccion="senegal"> Recibo </a></li>
                            <li><a href="Tipo" id="envio" data-seleccion="colombia" > Tipo </a></li>
                            <li><a href="Vivienda" id="envio" data-seleccion="colombia" > Vivienda </a></li>
+                           <li><a href="Asistencia" id="envio" data-seleccion="colombia" > Asistencia </a></li>
+                           <li><a href="Cargo" id="envio" data-seleccion="colombia" > Cargo </a></li>
                         </ul>
                         </li>
                     </ul>
