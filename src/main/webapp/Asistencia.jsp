@@ -55,7 +55,7 @@
                         <div class="form-group">
                             <div class="form-check">
                                 <label class="form-check-label" for="asistio">
-                                    <input type="checkbox" class="form-check-input" id="asistio" value="hola" placeholder="Asistio" name="asistio">
+                                    <input type="checkbox" class="form-check-input" id="asistio" value="" placeholder="Asistio" name="asistio">
                                     Asistio
                                 </label>
                             </div>

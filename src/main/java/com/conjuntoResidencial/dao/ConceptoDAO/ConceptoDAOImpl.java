@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 public class ConceptoDAOImpl extends AbstractDAO implements ConceptoDAO {
 
     public ConceptoDAOImpl() {
-        super(Cargo.class);
+        super(Concepto.class);
     }
 
     public List<Concepto> findAll() {

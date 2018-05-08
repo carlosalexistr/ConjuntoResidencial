@@ -12,13 +12,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css.css" media="screen" />
-        <title>Cargo</title>
+        <title>Concepto</title>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <h1 class="text-primary">Cargo</h1>
+                    <h1 class="text-primary">Concepto</h1>
                 </div>
                 <div class="col-2 offset-4">
                     <div id="volver">    
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <form action="Cargo?action=save" method="post">
+            <form action="Concepto?action=save" method="post">
                 <div class="row">
                     <div class="col-6">
                         <div class="form-group">
@@ -37,6 +37,17 @@
                         <div class="form-group">
                             <label for="description">Descripción</label>
                             <input type="text" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <br>
+                        <div class="form-group">
+                            <div class="form-check">
+                                <label class="form-check-label" for="estado">
+                                    <input type="checkbox" class="form-check-input" id="estado" value="" placeholder="Estado" name="estado">
+                                    Estado
+                                </label>
+                            </div>
                         </div>
                     </div>
                     
@@ -58,25 +69,31 @@
                             Descripcion
                         </th>                                   
                         <th>
+                            Estado
+                        </th>                                   
+                        <th>
                             Acciones
                         </th>                   
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${cargos}" var="cargo">
+                    <c:forEach items="${conceptos}" var="concepto">
                         <tr>
                             <td>
-                                ${cargo.getId()}
+                                ${concepto.getId()}
                             </td>
                             <td>
-                                ${cargo.getDescripcion()}
+                                ${concepto.getDescripcion()}
                             </td>
                             <td>
-                                <a href="Cargo?action=delete&id=${cargo.getId()}" class="btn btn-danger">Eliminar</a>
-                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${cargo.getId()}">Actualizar</button>
+                                ${concepto.getEstado()}
+                            </td>
+                            <td>
+                                <a href="Concepto?action=delete&id=${concepto.getId()}" class="btn btn-danger">Eliminar</a>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${concepto.getId()}">Actualizar</button>
 
                                 <!-- Modal -->
-                                <div id="myModal${cargo.getId()}" class="modal fade" role="dialog">
+                                <div id="myModal${concepto.getId()}" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
 
                                         <!-- Modal content-->
@@ -86,20 +103,24 @@
                                                 <h4 class="modal-title"></h4>
                                             </div>
                                             <div class="modal-body">
-                                                <p>Editar el Registro ${cargo.getId()}</p>
+                                                <p>Editar el Registro ${concepto.getId()}</p>
 
-                                                <form action="Cargo?action=editar" method="post">
+                                                <form action="Concepto?action=editar" method="post">
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="id">Id</label>
-                                                                <input type="text" value=${cargo.getId()} class="form-control" id="id" placeholder="Id" name="id" readonly="readonly">
+                                                                <input type="text" value=${concepto.getId()} class="form-control" id="id" placeholder="Id" name="id" readonly="readonly">
                                                             </div>
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="form-group">
                                                                 <label for="description">Descripción</label>
-                                                                <input type="text" value="${cargo.getDescripcion()}" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
+                                                                <input type="text" value="${concepto.getDescripcion()}" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="estado">Estado</label>
+                                                                <input type="checkbox" ${concepto.getEstado().equals(true) ? "checked='checked'" : ""} value="${concepto.getEstado()}" class="form-control" id="estado" placeholder="Estado" name="estado">
                                                             </div>
 
                                                         </div>
