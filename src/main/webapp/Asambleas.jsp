@@ -94,6 +94,64 @@
                             </td>
                             <td>
                                 <a href="Asamblea?action=delete&id=${asamblea.getId()}" class="btn btn-danger">Eliminar</a>
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${asamblea.getId()}">Actualizar</button>
+
+                                <!-- Modal -->
+                                <div id="myModal${asamblea.getId()}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title"></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Editar el Registro ${asamblea.getId()}</p>
+
+                                                <form action="Asamblea?action=editar" method="post">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="id">Id</label>
+                                                                <input type="text" value=${asamblea.getId()} class="form-control" id="id" placeholder="Id" name="id" readonly="readonly">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="description">Descripción</label>
+                                                                <input type="text" value="${asamblea.getDescripcion()}" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="fecha">Fecha</label>
+                                                                <input type="date" class="form-control"value="${asamblea.getFecha()}" id="fecha" placeholder="Fecha" name="fecha">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="form-group">
+                                                                <label for="lugar">Lugar</label>
+                                                                <input type="text" class="form-control"value="${asamblea.getLugar()}" id="lugar" placeholder="Lugar" name="lugar">
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-4 offset-4">
+                                                            <input type="submit" value="Editar" class="btn btnf btn-primary">
+                                                        </div>
+                                                    </div> 
+                                                </form>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </c:forEach>
