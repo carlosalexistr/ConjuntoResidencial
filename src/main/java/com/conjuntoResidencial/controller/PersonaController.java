@@ -97,6 +97,27 @@ public class PersonaController extends HttpServlet {
         persona.setClave(clave);
         this.personaimpl.save(persona);
     }
+    
+     public void actualizarPersona(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        String doc = request.getParameter("documento");
+        String nombre = request.getParameter("nombre");
+        String email = request.getParameter("email");
+        String celular = request.getParameter("celular");
+        String direccion = request.getParameter("direccion");
+        String clave = request.getParameter("clave");
+        Persona persona = new Persona();
+        
+        persona.setDocumento(doc);
+        persona.setNombre(nombre);
+        persona.setEmail(email);
+        persona.setCelular(celular);
+        persona.setDireccion(direccion);
+        persona.setClave(clave);
+        this.personaimpl.update(persona);
+        
+        
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -113,8 +134,16 @@ public class PersonaController extends HttpServlet {
         if(param!=null && param.equals("save")) {
             this.savePersona(request, response);
         }
+        
+         if(param!=null && param.equals("editar")) {
+            this.actualizarPersona(request, response);
+        }
+    
         this.mostrarPersonas(request, response);
+        
     }
+    
+   
 
     /**
      * Returns a short description of the servlet.

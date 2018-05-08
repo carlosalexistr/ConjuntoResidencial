@@ -89,6 +89,28 @@ public class MultaController extends HttpServlet {
         
        this.multaimpl.save(multa);
     }
+    
+     public void actualizarMulta(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ParseException {
+         
+         int numero = Integer.parseInt(request.getParameter("numero"));
+        int vivienda = Integer.parseInt(request.getParameter("vivienda"));
+        String fecha = request.getParameter("fecha");
+        String observacion = request.getParameter("observacion");
+        int recibo = Integer.parseInt(request.getParameter("recibo"));
+        String usuario = request.getParameter("usuario");
+        
+        Multa multa = new Multa();
+        multa.setNumero(numero);
+        multa.setVivienda(this.viviendaimpl.findById(vivienda));
+        multa.setFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
+        multa.setObservacion(observacion);
+        multa.setRecibo(this.reciboimpl.findById(recibo));
+        multa.setUsuario(usuario);
+        
+       this.multaimpl.update(multa);
+         
+     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -126,6 +148,9 @@ public class MultaController extends HttpServlet {
             if(param!=null && param.equals("save")) {
                 this.registrarMulta(request, response);
             }
+             if(param!=null && param.equals("editar")) {
+             this.actualizarMulta(request, response);
+        }
         } catch (ParseException ex) {
             Logger.getLogger(MultaController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("ERROR: " + ex.getMessage());

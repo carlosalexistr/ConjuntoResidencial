@@ -103,6 +103,32 @@ public class InquilinoController extends HttpServlet {
         inquilinoImpl.save(inquilino);
 
     }
+    
+    public void actualizarInquilino(HttpServletRequest request, HttpServletResponse response) throws ParseException{
+        
+        String fecha = request.getParameter("fechaF");
+        String fechaI = request.getParameter("fecha");
+        Persona p = new Persona();
+        p=peresonaImpl.findById(request.getParameter("cabeza"));
+        Vivienda v = new Vivienda();
+        
+        v= viviendaimpl.findById(Integer.parseInt(request.getParameter("vivienda")));
+
+        Inquilino inquilino = new Inquilino();
+        System.out.println("FECHAAA: "+ fecha + " - " + new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
+        inquilino.setFechafin(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
+        inquilino.setPersona1(p);
+        inquilino.setVivienda1(v);
+        inquilino.setResponsable(Integer.parseInt(request.getParameter("responsable")));
+        InquilinoPK inquilinoPk = new InquilinoPK();
+        inquilinoPk.setFechainicio(new SimpleDateFormat("yyyy-MM-dd").parse(fechaI));
+        inquilinoPk.setPersona(p.getDocumento());
+        inquilinoPk.setVivienda(v.getNumero());
+        
+        inquilino.setInquilinoPK(inquilinoPk);
+        inquilinoImpl.update(inquilino);
+        
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -143,8 +169,9 @@ public class InquilinoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         String param = request.getParameter("action");
           try {
-            String param = request.getParameter("action");
+          
             if(param!=null && param.equals("save")) {
                 this.registrarInquilino(request, response);
             }
@@ -152,6 +179,14 @@ public class InquilinoController extends HttpServlet {
             Logger.getLogger(MultaController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("ERROR: " + ex.getMessage());
         }
+           if (param != null && param.equals("editar")) {
+               
+            try {
+                actualizarInquilino(request, response);
+            } catch (ParseException ex) {
+                Logger.getLogger(AsambleaController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           }
         this.mostrarResultados(request, response);
     }
 

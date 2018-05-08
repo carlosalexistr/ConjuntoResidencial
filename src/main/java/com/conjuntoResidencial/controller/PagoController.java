@@ -94,6 +94,28 @@ public class PagoController extends HttpServlet {
         pagoImpl.save(pago);
        
     }
+    
+     public void actualizarPago(HttpServletRequest request, HttpServletResponse response) throws ParseException {
+        int numero = Integer.parseInt(request.getParameter("id"));
+        String fecha = request.getParameter("fecha");
+        int recibo = Integer.parseInt(request.getParameter("recibo"));
+        String tipo = request.getParameter("tipo");
+        String usuario = request.getParameter("usuario");
+     //   Long valor = Long.parseLong(request.getParameter("valor"));
+     
+        System.out.println("DATOOOOSSS: " + usuario);
+     
+        Pago pago = new Pago();
+        pago.setFechapago(new SimpleDateFormat("yyyy-MM-dd").parse(fecha));
+        pago.setNumero(numero);
+        pago.setRecibo(reciboImpl.findById(recibo));
+        pago.setTipo(tipo);
+        pago.setUsuario(usuario);
+        pago.setValor(null);
+        
+        pagoImpl.update(pago);
+       
+    }
 
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -130,6 +152,9 @@ public class PagoController extends HttpServlet {
             String param = request.getParameter("action");
             if(param!=null && param.equals("save")) {
                 this.registrarPago(request, response);
+            }
+            if(param!=null && param.equals("editar")) {
+                this.actualizarPago(request, response);
             }
         } catch (ParseException ex) {
             Logger.getLogger(PagoController.class.getName()).log(Level.SEVERE, null, ex);
