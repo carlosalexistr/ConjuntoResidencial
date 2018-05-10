@@ -65,7 +65,7 @@ public class PropietarioController extends HttpServlet {
             throws ServletException, IOException {
         String param = request.getParameter("action");
         if(param!=null && param.equals("delete")) {
-            this.eliminarPropietario(request.getParameter("id"));
+            this.deletePropietario(request.getParameter());
         }
         this.mostrarPropietario(request, response);
         
@@ -77,7 +77,7 @@ public class PropietarioController extends HttpServlet {
         request.setAttribute("propietarios", propietarios);
         request.getRequestDispatcher("/Propietario.jsp").forward(request, response);
     }
-    public void eliminarPropietario(T asdf) {
+    public void deletePropietario(Propietario asdf) {
         this.propietarioimpl.deleteById(asdf);
     }
     
@@ -96,7 +96,7 @@ public class PropietarioController extends HttpServlet {
         
 
         
-         System.out.println("AACTUALIZOOO PERSONAAA");
+         System.out.println("Actualizo Propietario");
         this.propietarioimpl.update(propietario);
         
         
