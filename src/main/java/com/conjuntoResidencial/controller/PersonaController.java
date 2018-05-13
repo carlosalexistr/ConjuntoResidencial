@@ -114,6 +114,8 @@ public class PersonaController extends HttpServlet {
         persona.setCelular(celular);
         persona.setDireccion(direccion);
         persona.setClave(clave);
+        
+         System.out.println("AACTUALIZOOO PERSONAAA");
         this.personaimpl.update(persona);
         
         

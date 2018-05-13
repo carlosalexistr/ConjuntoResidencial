@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" id="email" placeholder="Email" name="descripcion">
+                            <input type="text" class="form-control" id="email" placeholder="Email" name="email">
                         </div>
                     </div>
                     <div class="col-6">
@@ -101,9 +101,70 @@
                                     </td>
                                     <td>
                                         <a href="Persona?action=delete&id=${persona.getDocumento()}" class="btn btn-danger">Eliminar</a>
+                                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal${persona.getDocumento()}">Actualizar</button>
+
+                                        <!-- Modal -->
+                                        <div id="myModal${persona.getDocumento()}" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title"></h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Editar el Registro ${persona.getDocumento()}</p>
+
+                                                        <form action="Persona?action=editar" method="post">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label for="documento">Documento</label>
+                                                                        <input type="text" readonly="readonly" value=${persona.getDocumento()} class="form-control" id="doc" placeholder="Documento" name="documento">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="nombre">Nombre</label>
+                                                                        <input type="text" value=${persona.getNombre()} class="form-control" id="nombre" placeholder="Nombre" name="nombre">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="email">Email</label>
+                                                                        <input type="text" value=${persona.getEmail()} class="form-control" id="email" placeholder="Email" name="email">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <div class="form-group">
+                                                                        <label for="celular">celular</label>
+                                                                        <input type="text" value=${persona.getCelular()} class="form-control" id="celular" placeholder="celular" name="celular">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="direccion">Direccion</label>
+                                                                        <input type="text" value=${persona.getDireccion()} class="form-control" id="direccion" placeholder="Direccion" name="direccion">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="clave">Clave</label>
+                                                                        <input type="password" value=${persona.getClave()} class="form-control" id="clave" placeholder="Clave" name="clave">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4 offset-4">
+                                                                    <input type="submit" value="Actualizar" class="btn btnf btn-primary">
+                                                                </div>
+                                                            </div> 
+                                                        </form>
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
                                     </td>
-                                </tr>
-                            </c:forEach>
+                                </c:forEach>
+
+                            </tr>
                         </tbody>
 
                     </table>
