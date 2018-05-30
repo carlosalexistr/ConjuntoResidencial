@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : index
     Created on : 4/05/2018, 09:02:06 AM
     Author     : DELL
@@ -68,7 +68,9 @@
                            <li><a href="Cargo" id="envio" data-seleccion="colombia" > Cargo </a></li>
                            <li><a href="Concepto" id="envio" data-seleccion="colombia" > Concepto </a></li>
                            <li><a href="Consejo" id="envio" data-seleccion="colombia" > Consejo </a></li>
-                           <li><a href="DetalleRecibo" id="envio" data-seleccion="colombia" > Detalle de recibo </a></li>
+                           <li><a href="Propietario" id="envio" data-seleccion="colombia" > Propietario </a></li>
+                           <li><a href="Solicitud" id="envio" data-seleccion="colombia" > Solicitud </a></li>
+                           <li><a href="Servicio" id="envio" data-seleccion="colombia" > Servicio </a></li>
                         </ul>
                         </li>
                     </ul>

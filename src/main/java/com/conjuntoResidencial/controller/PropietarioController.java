@@ -5,12 +5,22 @@
  */
 package com.conjuntoResidencial.controller;
 
-
+import com.conjuntoResidencial.dao.PersonaDAO.PersonaDAOImpl;
 import com.conjuntoResidencial.dao.PropietarioDAO.PropietarioDAOImpl;
+import com.conjuntoResidencial.dao.ViviendaDAO.ViviendaDAOImpl;
+import com.conjuntoResidencial.model.Persona;
 import com.conjuntoResidencial.model.Propietario;
+import com.conjuntoResidencial.model.PropietarioPK;
+import com.conjuntoResidencial.model.Vivienda;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,12 +29,15 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Kubic
+ * @author Carlos
  */
-@WebServlet(name = "PropietarioController", urlPatterns = {"/Propitario"})
+@WebServlet(name = "PropietarioController", urlPatterns = {"/Propietario"})
 public class PropietarioController extends HttpServlet {
 
-    private PropietarioDAOImpl propietarioimpl = new PropietarioDAOImpl();
+    PropietarioDAOImpl propietarioimpl = new PropietarioDAOImpl();
+    ViviendaDAOImpl viviendaimpl = new ViviendaDAOImpl();
+    PersonaDAOImpl personaImpl = new PersonaDAOImpl();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,7 +55,7 @@ public class PropietarioController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PropietarioController</title>");            
+            out.println("<title>Servlet PropietarioController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet PropietarioController at " + request.getContextPath() + "</h1>");
@@ -64,42 +77,48 @@ public class PropietarioController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String param = request.getParameter("action");
-        if(param!=null && param.equals("delete")) {
-            //this.deletePropietario(request.getParameter());
+        if (param != null && param.equals("delete")) {
+            try {
+                eliminarPropietario(Integer.parseInt(request.getParameter("vivienda")), request.getParameter("persona"), new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fecha")));
+            } catch (ParseException ex) {
+                Logger.getLogger(PropietarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        this.mostrarPropietario(request, response);
-        
+        mostrarRegistros(request, response);
     }
-    
-    public void mostrarPropietario(HttpServletRequest request, HttpServletResponse response) 
+
+    public void mostrarRegistros(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Propietario> propietarios = this.propietarioimpl.findAll();
-        request.setAttribute("propietarios", propietarios);
+        
+        
+        request.setAttribute("persona", this.personaImpl.findAll());
+        request.setAttribute("viviendas", this.viviendaimpl.findAll());
+        request.setAttribute("propietario", this.propietarioimpl.findAll());
+        
         request.getRequestDispatcher("/Propietario.jsp").forward(request, response);
     }
-    public void deletePropietario(Propietario asdf) {
-        //this.propietarioimpl.deleteById(asdf);
-    }
-    
-    public void savePropietario(HttpServletRequest request, HttpServletResponse response) {
 
-        Propietario propietario = new Propietario();
-        
-
+    public void registrarPropietarios(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ParseException {
+        Propietario propietario = new Propietario(Integer.parseInt(request.getParameter("vivienda")), request.getParameter("persona"), new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fechaInicio")));
+        propietario.setResponsable(Integer.parseInt(request.getParameter("responsable")));
+        propietario.setFechafin(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fechaFin")));
         this.propietarioimpl.save(propietario);
     }
-    
-     public void actualizarPropietario(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
 
-        Propietario propietario = new Propietario();
-        
+    public void editarPropietario(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ParseException {
+        Propietario propietario = new Propietario(Integer.parseInt(request.getParameter("vivienda")), request.getParameter("persona"), new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fechaInicio")));
+        propietario.setResponsable(Integer.parseInt(request.getParameter("responsable")));
+         propietario.setFechafin(new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("fechaFin")));
+        this.propietarioimpl.update(propietario);;
+    }
 
-        
-         System.out.println("Actualizo Propietario");
-        this.propietarioimpl.update(propietario);
-        
-        
+    public void eliminarPropietario(int vivienda, String persona, Date fechainicio)
+            throws ServletException, IOException {
+        this.propietarioimpl.deleteById(new PropietarioPK(vivienda, persona, fechainicio));
+
     }
 
     /**
@@ -114,19 +133,22 @@ public class PropietarioController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String param = request.getParameter("action");
-        if(param!=null && param.equals("save")) {
-            this.savePropietario(request, response);
+        if (param != null && param.equals("save")) {
+            try {
+                registrarPropietarios(request, response);
+            } catch (ParseException ex) {
+                Logger.getLogger(PropietarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
-         if(param!=null && param.equals("editar")) {
-            this.actualizarPropietario(request, response);
+        if (param != null && param.equals("editar")) {
+            try {
+                editarPropietario(request, response);
+            } catch (ParseException ex) {
+                Logger.getLogger(PropietarioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-    
-        this.mostrarPropietario(request, response);
-        
+        mostrarRegistros(request, response);
     }
-    
-   
 
     /**
      * Returns a short description of the servlet.
